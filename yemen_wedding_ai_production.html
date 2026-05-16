@@ -1,0 +1,3460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0A0A0A">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Yemen Wedding AI - يمن ويدينج اي اي</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ========== DESIGN TOKENS ========== */
+        :root {
+            --gold-50: #FFF9E6;
+            --gold-100: #FFEFB3;
+            --gold-200: #FFE580;
+            --gold-300: #FFD94D;
+            --gold-400: #F4D03F;
+            --gold-500: #D4AF37;
+            --gold-600: #B8860B;
+            --gold-700: #8B6914;
+            --gold-800: #6B4C1E;
+            --gold-900: #4A3510;
+
+            --black-50: #F5F5F5;
+            --black-100: #E0E0E0;
+            --black-200: #BDBDBD;
+            --black-300: #9E9E9E;
+            --black-400: #757575;
+            --black-500: #616161;
+            --black-600: #424242;
+            --black-700: #303030;
+            --black-800: #212121;
+            --black-900: #121212;
+            --black-950: #0A0A0A;
+
+            --green-50: #E8F5E9;
+            --green-100: #C8E6C9;
+            --green-500: #4CAF50;
+            --green-700: #2E7D32;
+            --green-900: #1B3A2F;
+
+            --red-accent: #8B2635;
+            --red-light: #C62828;
+
+            --gradient-gold: linear-gradient(135deg, var(--gold-500) 0%, var(--gold-400) 50%, var(--gold-600) 100%);
+            --gradient-gold-radial: radial-gradient(circle at 30% 30%, var(--gold-400), var(--gold-600));
+            --gradient-dark: linear-gradient(180deg, var(--black-950) 0%, var(--black-900) 100%);
+            --gradient-card: linear-gradient(145deg, rgba(212,175,55,0.08) 0%, rgba(27,58,47,0.15) 100%);
+
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.3);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+            --shadow-gold: 0 4px 24px rgba(212,175,55,0.2);
+            --shadow-gold-lg: 0 8px 40px rgba(212,175,55,0.25);
+
+            --radius-xs: 8px;
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-full: 9999px;
+
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ========== RESET & BASE ========== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--black-950);
+            color: #fff;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            direction: rtl;
+        }
+
+        /* ========== APP SHELL ========== */
+        .app-shell {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            max-height: 932px;
+            background: var(--black-950);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 440px) {
+            .app-shell {
+                height: 92vh;
+                border-radius: 40px;
+                border: 1px solid rgba(212,175,55,0.15);
+                box-shadow: 0 0 80px rgba(212,175,55,0.08), 0 25px 50px rgba(0,0,0,0.5);
+            }
+        }
+
+        /* ========== SCREEN SYSTEM ========== */
+        .screen-layer {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px) scale(0.98);
+            transition: all 0.45s var(--ease-out-expo);
+            z-index: 1;
+        }
+
+        .screen-layer.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0) scale(1);
+            z-index: 10;
+        }
+
+        .screen-layer.exit-left {
+            transform: translateX(-30%);
+            opacity: 0;
+        }
+
+        .screen-layer.exit-right {
+            transform: translateX(30%);
+            opacity: 0;
+        }
+
+        .screen-scroll {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .screen-scroll::-webkit-scrollbar { display: none; }
+
+        /* ========== SAFE AREA ========== */
+        .safe-top { padding-top: env(safe-area-inset-top, 44px); }
+        .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 20px); }
+
+        /* ========== SPLASH ========== */
+        .splash-layer {
+            background: var(--gradient-dark);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .splash-layer.active { z-index: 100; }
+
+        .splash-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .splash-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: orb-float 12s ease-in-out infinite;
+        }
+
+        .splash-orb:nth-child(1) {
+            width: 300px; height: 300px;
+            background: var(--gold-500);
+            top: 10%; right: -50px;
+            animation-delay: 0s;
+        }
+
+        .splash-orb:nth-child(2) {
+            width: 250px; height: 250px;
+            background: var(--green-900);
+            bottom: 20%; left: -60px;
+            animation-delay: -4s;
+        }
+
+        .splash-orb:nth-child(3) {
+            width: 200px; height: 200px;
+            background: var(--gold-600);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -8s;
+        }
+
+        @keyframes orb-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-30px, 20px) scale(1.1); }
+            66% { transform: translate(20px, -30px) scale(0.9); }
+        }
+
+        .splash-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .splash-logo-ring {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: var(--gradient-gold-radial);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-gold-lg), 0 0 0 1px rgba(212,175,55,0.3);
+            animation: logo-breathe 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        .splash-logo-ring::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: var(--gold-400);
+            border-right-color: var(--gold-500);
+            animation: logo-spin 4s linear infinite;
+        }
+
+        @keyframes logo-breathe {
+            0%, 100% { transform: scale(1); box-shadow: var(--shadow-gold-lg); }
+            50% { transform: scale(1.03); box-shadow: 0 8px 50px rgba(212,175,55,0.35), 0 0 0 1px rgba(212,175,55,0.4); }
+        }
+
+        @keyframes logo-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .splash-logo-ring i {
+            font-size: 64px;
+            color: var(--black-950);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .splash-brand {
+            text-align: center;
+        }
+
+        .splash-brand h1 {
+            font-size: 32px;
+            font-weight: 900;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .splash-brand p {
+            font-size: 14px;
+            color: var(--black-300);
+            margin-top: 6px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+        }
+
+        .splash-loader-track {
+            width: 180px;
+            height: 3px;
+            background: var(--black-800);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 16px;
+        }
+
+        .splash-loader-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-gold);
+            border-radius: 3px;
+            animation: splash-load 2.8s var(--ease-out-expo) forwards;
+        }
+
+        @keyframes splash-load {
+            0% { width: 0%; }
+            40% { width: 45%; }
+            70% { width: 75%; }
+            100% { width: 100%; }
+        }
+
+        .splash-version {
+            position: absolute;
+            bottom: 40px;
+            font-size: 11px;
+            color: var(--black-500);
+            letter-spacing: 1px;
+        }
+
+        /* ========== ONBOARDING ========== */
+        .onboarding-layer { background: var(--black-950); }
+
+        .onboarding-layer .screen-scroll {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .onboarding-visual {
+            position: relative;
+            height: 55vh;
+            min-height: 400px;
+            overflow: hidden;
+        }
+
+        .onboarding-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s var(--ease-out-expo);
+        }
+
+        .onboarding-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--black-950) 0%, transparent 50%);
+        }
+
+        .onboarding-dots {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3;
+        }
+
+        .onboarding-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transition: all 0.4s var(--ease-spring);
+            cursor: pointer;
+        }
+
+        .onboarding-dot.active {
+            width: 28px;
+            border-radius: 4px;
+            background: var(--gold-500);
+        }
+
+        .onboarding-body {
+            padding: 0 28px 32px;
+            margin-top: -20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .onboarding-title {
+            font-size: 26px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .onboarding-desc {
+            font-size: 15px;
+            color: var(--black-300);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .onboarding-features {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .onboarding-feature {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(212,175,55,0.08);
+            border: 1px solid rgba(212,175,55,0.15);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gold-400);
+        }
+
+        .onboarding-feature i {
+            font-size: 10px;
+            color: var(--gold-500);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px 24px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .btn:active::after {
+            transform: translateX(100%);
+        }
+
+        .btn-primary {
+            background: var(--gradient-gold);
+            color: var(--black-950);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .btn-primary:hover, .btn-primary:active {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold-lg);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gold-400);
+            border: 1.5px solid rgba(212,175,55,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212,175,55,0.08);
+            border-color: var(--gold-500);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--black-300);
+            padding: 12px;
+        }
+
+        .btn-sm {
+            padding: 10px 18px;
+            font-size: 13px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* ========== HEADER ========== */
+        .app-header {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(20px) saturate(1.5);
+            -webkit-backdrop-filter: blur(20px) saturate(1.5);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .app-header-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .header-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--black-800);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 15px;
+        }
+
+        .header-btn:hover {
+            background: var(--black-700);
+            border-color: rgba(212,175,55,0.2);
+        }
+
+        .header-btn.gold {
+            background: rgba(212,175,55,0.1);
+            border-color: rgba(212,175,55,0.2);
+            color: var(--gold-400);
+        }
+
+        /* ========== HOME ========== */
+        .home-layer { background: var(--black-950); }
+
+        .home-hero {
+            padding: 8px 20px 24px;
+            position: relative;
+        }
+
+        .home-hero-glow {
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .home-welcome-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .home-welcome-text {
+            font-size: 13px;
+            color: var(--black-300);
+            font-weight: 500;
+        }
+
+        .home-welcome-name {
+            font-size: 22px;
+            font-weight: 900;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+        .home-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gradient-gold-radial);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--black-950);
+            font-weight: 800;
+            box-shadow: var(--shadow-gold);
+            border: 2px solid rgba(212,175,55,0.3);
+        }
+
+        .hero-banner {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--gradient-card);
+            border: 1px solid rgba(212,175,55,0.12);
+            padding: 24px;
+        }
+
+        .hero-banner-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.4;
+        }
+
+        .hero-banner-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(2px) brightness(0.4);
+        }
+
+        .hero-banner-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-banner h2 {
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .hero-banner p {
+            font-size: 13px;
+            color: var(--black-300);
+            line-height: 1.6;
+            margin-bottom: 18px;
+            max-width: 260px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .hero-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--black-300);
+            font-weight: 600;
+        }
+
+        .hero-stat i {
+            color: var(--gold-500);
+            font-size: 11px;
+        }
+
+        .section-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            margin: 28px 0 14px;
+        }
+
+        .section-label {
+            font-size: 17px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .section-link {
+            font-size: 13px;
+            color: var(--gold-400);
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .section-link:hover {
+            color: var(--gold-300);
+            gap: 6px;
+        }
+
+        /* ========== PRESETS ========== */
+        .presets-track {
+            display: flex;
+            gap: 12px;
+            padding: 0 20px 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .presets-track::-webkit-scrollbar { display: none; }
+
+        .preset-tile {
+            min-width: 150px;
+            height: 200px;
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.35s var(--ease-out-expo);
+            flex-shrink: 0;
+        }
+
+        .preset-tile:hover, .preset-tile:active {
+            transform: translateY(-4px);
+            border-color: var(--gold-500);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .preset-tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s var(--ease-out-expo);
+        }
+
+        .preset-tile:hover img {
+            transform: scale(1.08);
+        }
+
+        .preset-tile-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 40%, transparent 70%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 14px;
+        }
+
+        .preset-tile-name {
+            font-size: 15px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 3px;
+        }
+
+        .preset-tile-meta {
+            font-size: 11px;
+            color: var(--gold-400);
+            font-weight: 600;
+        }
+
+        .preset-tile-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 4px 10px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-xs);
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--gold-400);
+            border: 1px solid rgba(212,175,55,0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ========== GALLERY GRID ========== */
+        .gallery-masonry {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 0 20px;
+        }
+
+        .gallery-card {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.35s var(--ease-out-expo);
+        }
+
+        .gallery-card:hover, .gallery-card:active {
+            transform: translateY(-3px);
+            border-color: rgba(212,175,55,0.2);
+            box-shadow: var(--shadow-md);
+        }
+
+        .gallery-card:nth-child(3n) {
+            grid-row: span 2;
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s var(--ease-out-expo);
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 14px 12px 12px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+        }
+
+        .gallery-card-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .gallery-card-time {
+            font-size: 10px;
+            color: var(--black-400);
+            margin-top: 2px;
+        }
+
+        .gallery-card-ai {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 3px 8px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: 800;
+            color: var(--gold-400);
+            border: 1px solid rgba(212,175,55,0.2);
+            letter-spacing: 0.5px;
+        }
+
+        /* ========== GENERATION FLOW ========== */
+        .gen-layer { background: var(--black-950); }
+
+        .gen-provider-bar {
+            display: flex;
+            gap: 8px;
+            padding: 0 20px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .gen-provider-bar::-webkit-scrollbar { display: none; }
+
+        .provider-pill {
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            background: var(--black-800);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: var(--black-300);
+            font-family: 'Cairo', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .provider-pill.active {
+            background: rgba(212,175,55,0.12);
+            border-color: var(--gold-500);
+            color: var(--gold-400);
+        }
+
+        .provider-pill i {
+            font-size: 10px;
+        }
+
+        .styles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 0 20px;
+        }
+
+        .style-tile {
+            aspect-ratio: 1;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .style-tile.selected {
+            border-color: var(--gold-500);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .style-tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .style-tile-mask {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 12px;
+        }
+
+        .style-tile-name {
+            font-size: 14px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .style-tile-desc {
+            font-size: 11px;
+            color: var(--black-300);
+            margin-top: 2px;
+        }
+
+        .style-check {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--gold-500);
+            color: var(--black-950);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s var(--ease-spring);
+        }
+
+        .style-tile.selected .style-check {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Options */
+        .options-panel {
+            padding: 20px;
+        }
+
+        .option-block {
+            margin-bottom: 24px;
+        }
+
+        .option-block-label {
+            font-size: 14px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option-block-label i {
+            color: var(--gold-500);
+            font-size: 12px;
+        }
+
+        .chips-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            background: var(--black-800);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: var(--black-300);
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s var(--ease-out-expo);
+            user-select: none;
+        }
+
+        .chip:hover {
+            border-color: rgba(212,175,55,0.2);
+            color: var(--black-200);
+        }
+
+        .chip.selected {
+            background: rgba(212,175,55,0.1);
+            border-color: var(--gold-500);
+            color: var(--gold-400);
+            box-shadow: 0 0 12px rgba(212,175,55,0.1);
+        }
+
+        .chip.premium-chip {
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .chip.premium-chip::before {
+            content: '\f005';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 9px;
+            color: var(--gold-500);
+        }
+
+        /* Floating Generate Button */
+        .fab-generate {
+            position: absolute;
+            bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 16px 32px;
+            background: var(--gradient-gold);
+            color: var(--black-950);
+            border: none;
+            border-radius: var(--radius-full);
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow-gold-lg), 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 30;
+            transition: all 0.5s var(--ease-spring);
+            white-space: nowrap;
+        }
+
+        .fab-generate.visible {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .fab-generate i {
+            font-size: 18px;
+        }
+
+        .fab-generate:active {
+            transform: translateX(-50%) translateY(2px) scale(0.97);
+        }
+
+        /* ========== LOADING / GENERATION ========== */
+        .loading-layer {
+            background: var(--black-950);
+            justify-content: center;
+            align-items: center;
+            z-index: 90;
+        }
+
+        .loading-layer.active { z-index: 90; }
+
+        .gen-visualizer {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 40px;
+        }
+
+        .gen-ring-outer {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: var(--gold-600);
+            border-right-color: var(--gold-500);
+            animation: gen-spin 2s linear infinite;
+        }
+
+        .gen-ring-inner {
+            position: absolute;
+            inset: 20px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-bottom-color: var(--gold-400);
+            border-left-color: var(--gold-300);
+            animation: gen-spin 1.5s linear infinite reverse;
+        }
+
+        .gen-core {
+            position: absolute;
+            inset: 40px;
+            border-radius: 50%;
+            background: var(--gradient-gold-radial);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-gold-lg);
+            animation: gen-pulse 2s ease-in-out infinite;
+        }
+
+        .gen-core i {
+            font-size: 36px;
+            color: var(--black-950);
+        }
+
+        @keyframes gen-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes gen-pulse {
+            0%, 100% { transform: scale(1); box-shadow: var(--shadow-gold-lg); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 50px rgba(212,175,55,0.4); }
+        }
+
+        .gen-status {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .gen-status h3 {
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 6px;
+        }
+
+        .gen-status p {
+            font-size: 14px;
+            color: var(--black-300);
+        }
+
+        .gen-progress-track {
+            width: 240px;
+            height: 4px;
+            background: var(--black-800);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .gen-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-gold);
+            border-radius: 2px;
+            transition: width 0.4s var(--ease-out-expo);
+        }
+
+        .gen-pipeline {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 260px;
+        }
+
+        .gen-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            background: var(--black-900);
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: all 0.4s;
+        }
+
+        .gen-step.active {
+            background: rgba(212,175,55,0.06);
+            border-color: rgba(212,175,55,0.15);
+        }
+
+        .gen-step.done {
+            opacity: 0.5;
+        }
+
+        .gen-step.done .gen-step-icon {
+            background: var(--green-700);
+            color: #fff;
+        }
+
+        .gen-step-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--black-800);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: var(--black-400);
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .gen-step.active .gen-step-icon {
+            background: var(--gold-500);
+            color: var(--black-950);
+            animation: step-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes step-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(212,175,55,0); }
+        }
+
+        .gen-step-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--black-300);
+            transition: all 0.3s;
+        }
+
+        .gen-step.active .gen-step-text {
+            color: var(--gold-400);
+            font-weight: 700;
+        }
+
+        .gen-step-time {
+            margin-right: auto;
+            font-size: 11px;
+            color: var(--black-500);
+            font-weight: 500;
+        }
+
+        /* ========== RESULT ========== */
+        .result-layer { background: var(--black-950); }
+
+        .result-image-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+        }
+
+        .result-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .result-image-actions {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 5;
+        }
+
+        .result-img-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .result-img-btn:hover {
+            background: rgba(0,0,0,0.7);
+            border-color: var(--gold-500);
+            color: var(--gold-400);
+        }
+
+        .result-watermark {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 6px 14px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--black-300);
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .result-watermark i {
+            color: var(--gold-500);
+            font-size: 10px;
+        }
+
+        .result-details {
+            padding: 20px;
+        }
+
+        .result-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+
+        .result-title {
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .ai-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: var(--radius-full);
+            font-size: 10px;
+            color: var(--gold-400);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .ai-tag i {
+            font-size: 9px;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .result-submeta {
+            font-size: 13px;
+            color: var(--black-300);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Before/After */
+        .ba-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3/4;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: ew-resize;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .ba-wrapper img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .ba-before {
+            clip-path: inset(0 50% 0 0);
+            z-index: 2;
+        }
+
+        .ba-slider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 3px;
+            background: var(--gold-500);
+            z-index: 10;
+            cursor: ew-resize;
+            box-shadow: 0 0 10px rgba(212,175,55,0.3);
+        }
+
+        .ba-slider-knob {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gradient-gold);
+            box-shadow: var(--shadow-gold-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black-950);
+            font-size: 14px;
+        }
+
+        .ba-label {
+            position: absolute;
+            top: 14px;
+            padding: 5px 12px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-xs);
+            font-size: 11px;
+            font-weight: 800;
+            color: #fff;
+            border: 1px solid rgba(212,175,55,0.2);
+            z-index: 5;
+            letter-spacing: 0.5px;
+        }
+
+        .ba-label.before { right: 14px; }
+        .ba-label.after { left: 14px; }
+
+        /* Result Actions */
+        .result-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .result-action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 14px 8px;
+            background: var(--black-900);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.04);
+            cursor: pointer;
+            transition: all 0.25s var(--ease-out-expo);
+        }
+
+        .result-action-btn:hover, .result-action-btn:active {
+            background: var(--black-800);
+            border-color: rgba(212,175,55,0.15);
+            transform: translateY(-2px);
+        }
+
+        .result-action-btn i {
+            font-size: 20px;
+            color: var(--gold-500);
+        }
+
+        .result-action-btn span {
+            font-size: 11px;
+            color: var(--black-300);
+            font-weight: 600;
+        }
+
+        /* ========== AUTH ========== */
+        .auth-layer { background: var(--black-950); }
+
+        .auth-visual {
+            height: 35vh;
+            min-height: 280px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 28px 28px;
+        }
+
+        .auth-visual img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.5);
+        }
+
+        .auth-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--black-950) 0%, transparent 60%);
+        }
+
+        .auth-visual-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .auth-visual-content h2 {
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 6px;
+        }
+
+        .auth-visual-content p {
+            font-size: 14px;
+            color: var(--black-300);
+        }
+
+        .auth-form {
+            padding: 0 28px 28px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--black-200);
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--black-900);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .input-field::placeholder {
+            color: var(--black-500);
+        }
+
+        .input-field:focus {
+            border-color: var(--gold-500);
+            background: var(--black-800);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.08);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            color: var(--black-500);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+        }
+
+        .social-auth {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            background: var(--black-900);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn:hover {
+            background: var(--black-800);
+            border-color: rgba(212,175,55,0.15);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--black-400);
+        }
+
+        .auth-footer a {
+            color: var(--gold-400);
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* ========== SUBSCRIPTION ========== */
+        .sub-layer { background: var(--black-950); }
+
+        .sub-hero {
+            padding: 24px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(212,175,55,0.06) 0%, transparent 100%);
+        }
+
+        .sub-hero h2 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 6px;
+        }
+
+        .sub-hero p {
+            font-size: 14px;
+            color: var(--black-300);
+        }
+
+        .plans-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 0 20px 24px;
+        }
+
+        .plan-card {
+            background: var(--black-900);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            position: relative;
+            transition: all 0.35s var(--ease-out-expo);
+            cursor: pointer;
+        }
+
+        .plan-card:hover, .plan-card:active {
+            transform: translateY(-3px);
+            border-color: rgba(212,175,55,0.15);
+            box-shadow: var(--shadow-md);
+        }
+
+        .plan-card.featured {
+            background: linear-gradient(145deg, rgba(212,175,55,0.08) 0%, rgba(27,58,47,0.1) 100%);
+            border-color: rgba(212,175,55,0.25);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .plan-card.featured::before {
+            content: 'الأكثر شيوعاً';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 4px 14px;
+            background: var(--gradient-gold);
+            color: var(--black-950);
+            font-size: 11px;
+            font-weight: 800;
+            border-radius: var(--radius-full);
+            letter-spacing: 0.5px;
+        }
+
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .plan-price {
+            text-align: left;
+        }
+
+        .plan-price-amount {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--gold-400);
+        }
+
+        .plan-price-amount span {
+            font-size: 14px;
+            color: var(--black-400);
+            font-weight: 600;
+        }
+
+        .plan-desc {
+            font-size: 13px;
+            color: var(--black-300);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .plan-features {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .plan-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--black-200);
+        }
+
+        .plan-feature i {
+            color: var(--green-500);
+            font-size: 12px;
+        }
+
+        .plan-feature.locked i {
+            color: var(--black-500);
+        }
+
+        .plan-feature.locked {
+            color: var(--black-500);
+        }
+
+        /* ========== PROFILE ========== */
+        .profile-header {
+            padding: 60px 20px 24px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(212,175,55,0.06) 0%, transparent 100%);
+        }
+
+        .profile-avatar-lg {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--gradient-gold-radial);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: var(--black-950);
+            font-weight: 900;
+            margin: 0 auto 14px;
+            box-shadow: var(--shadow-gold-lg);
+            border: 3px solid rgba(212,175,55,0.3);
+        }
+
+        .profile-name {
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .profile-tier {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gold-400);
+        }
+
+        .profile-stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 20px;
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .profile-stat-value {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--gold-400);
+        }
+
+        .profile-stat-label {
+            font-size: 12px;
+            color: var(--black-400);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .settings-list {
+            padding: 0 20px 24px;
+        }
+
+        .settings-group {
+            background: var(--black-900);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.04);
+            margin-bottom: 16px;
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .settings-item:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .settings-item-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(212,175,55,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-500);
+            font-size: 14px;
+        }
+
+        .settings-item-text {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .settings-item-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .settings-item-value {
+            font-size: 13px;
+            color: var(--black-400);
+            font-weight: 600;
+        }
+
+        /* Toggle */
+        .toggle {
+            width: 50px;
+            height: 28px;
+            border-radius: 14px;
+            background: var(--black-700);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-spring);
+            flex-shrink: 0;
+        }
+
+        .toggle.on {
+            background: var(--gold-600);
+        }
+
+        .toggle-knob {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #fff;
+            transition: all 0.3s var(--ease-spring);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .toggle.on .toggle-knob {
+            right: 25px;
+        }
+
+        /* ========== BOTTOM NAV ========== */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 76px;
+            background: rgba(10,10,10,0.92);
+            backdrop-filter: blur(24px) saturate(1.8);
+            -webkit-backdrop-filter: blur(24px) saturate(1.8);
+            border-top: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding-top: 10px;
+            padding-bottom: env(safe-area-inset-bottom, 8px);
+            z-index: 50;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 6px 14px;
+            border-radius: 12px;
+            transition: all 0.25s var(--ease-out-expo);
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        .nav-item.active {
+            color: var(--gold-500);
+        }
+
+        .nav-item:not(.active) {
+            color: var(--black-500);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            transition: transform 0.3s var(--ease-spring);
+        }
+
+        .nav-item.active i {
+            transform: translateY(-2px);
+        }
+
+        .nav-item span {
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .nav-fab {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--gradient-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black-950);
+            margin-top: -24px;
+            box-shadow: var(--shadow-gold-lg), 0 4px 20px rgba(0,0,0,0.3);
+            border: 4px solid var(--black-950);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-spring);
+        }
+
+        .nav-fab:hover, .nav-fab:active {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 12px 40px rgba(212,175,55,0.4);
+        }
+
+        .nav-fab i {
+            font-size: 22px;
+        }
+
+        /* ========== MODALS ========== */
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s var(--ease-out-expo);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-sheet {
+            width: 100%;
+            background: var(--black-900);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            padding: 28px 24px 32px;
+            transform: translateY(100%);
+            transition: all 0.45s var(--ease-out-expo);
+            border-top: 1px solid rgba(212,175,55,0.15);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.open .modal-sheet {
+            transform: translateY(0);
+        }
+
+        .modal-handle {
+            width: 40px;
+            height: 4px;
+            background: var(--black-700);
+            border-radius: 2px;
+            margin: 0 auto 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .share-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .share-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .share-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .share-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            transition: all 0.2s;
+        }
+
+        .share-icon.whatsapp { background: #25D366; }
+        .share-icon.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .share-icon.tiktok { background: #000; border: 1px solid rgba(255,255,255,0.1); }
+        .share-icon.copy { background: var(--black-800); border: 1px solid rgba(255,255,255,0.1); }
+
+        .share-label {
+            font-size: 11px;
+            color: var(--black-300);
+            font-weight: 600;
+        }
+
+        .modal-close-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--black-800);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--black-700);
+        }
+
+        /* ========== FULL IMAGE VIEW ========== */
+        .full-image-layer {
+            position: absolute;
+            inset: 0;
+            background: var(--black-950);
+            z-index: 80;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s var(--ease-out-expo);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-image-layer.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .full-image-layer img {
+            flex: 1;
+            width: 100%;
+            object-fit: contain;
+            background: var(--black-950);
+        }
+
+        .full-image-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 50px 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(var(--black-950), transparent);
+            z-index: 5;
+        }
+
+        /* ========== TOAST ========== */
+        .toast {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: var(--black-900);
+            border: 1px solid rgba(212,175,55,0.2);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s var(--ease-out-expo);
+            z-index: 200;
+            box-shadow: var(--shadow-lg);
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast i {
+            color: var(--gold-500);
+            font-size: 16px;
+        }
+
+        /* ========== PREMIUM BADGE ========== */
+        .premium-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            background: var(--gradient-gold);
+            color: var(--black-950);
+            font-size: 10px;
+            font-weight: 900;
+            border-radius: var(--radius-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.5s var(--ease-out-expo) forwards;
+        }
+
+        .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .animate-delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+        /* ========== UTILITIES ========== */
+        .text-gold { color: var(--gold-400); }
+        .text-gray { color: var(--black-300); }
+        .text-muted { color: var(--black-500); }
+        .fw-900 { font-weight: 900; }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 8px; }
+        .gap-3 { gap: 12px; }
+        .mt-2 { margin-top: 8px; }
+        .mt-3 { margin-top: 12px; }
+        .mt-4 { margin-top: 16px; }
+        .mb-2 { margin-bottom: 8px; }
+        .mb-3 { margin-bottom: 12px; }
+        .mb-4 { margin-bottom: 16px; }
+        .p-4 { padding: 16px; }
+        .px-5 { padding-left: 20px; padding-right: 20px; }
+        .hidden { display: none !important; }
+
+        /* ========== SCROLL HINT ========== */
+        .scroll-hint {
+            position: absolute;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 4px;
+            background: var(--black-700);
+            border-radius: 2px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-shell" id="appShell">
+        <!-- Toast -->
+        <div class="toast" id="toast">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastText">تم بنجاح</span>
+        </div>
+
+        <!-- ==================== SPLASH ==================== -->
+        <div class="screen-layer splash-layer active" id="splashLayer">
+            <div class="splash-bg">
+                <div class="splash-orb"></div>
+                <div class="splash-orb"></div>
+                <div class="splash-orb"></div>
+            </div>
+            <div class="splash-content">
+                <div class="splash-logo-ring">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="splash-brand">
+                    <h1>Yemen Wedding AI</h1>
+                    <p>يمن ويدينج اي اي</p>
+                </div>
+                <div class="splash-loader-track">
+                    <div class="splash-loader-fill"></div>
+                </div>
+            </div>
+            <div class="splash-version">v2.0.0 Production</div>
+        </div>
+
+        <!-- ==================== ONBOARDING ==================== -->
+        <div class="screen-layer onboarding-layer" id="onboardingLayer">
+            <div class="screen-scroll">
+                <div class="onboarding-visual">
+                    <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" id="onboardingImg" alt="Onboarding">
+                    <div class="onboarding-dots">
+                        <div class="onboarding-dot active" data-idx="0"></div>
+                        <div class="onboarding-dot" data-idx="1"></div>
+                        <div class="onboarding-dot" data-idx="2"></div>
+                    </div>
+                </div>
+                <div class="onboarding-body">
+                    <h2 class="onboarding-title" id="onboardingTitle">تراث يمني أصيل</h2>
+                    <p class="onboarding-desc" id="onboardingDesc">اكتشف جمال الأزياء اليمنية التقليدية بأدق التفاصيل، من الثوب الصنعاني إلى الزي الحضرمي الفاخر</p>
+                    <div class="onboarding-features">
+                        <div class="onboarding-feature"><i class="fas fa-bolt"></i> ذكاء اصطناعي متقدم</div>
+                        <div class="onboarding-feature"><i class="fas fa-gem"></i> مجوهرات واقعية</div>
+                    </div>
+                    <button class="btn btn-primary" id="onboardingBtn" onclick="nextOnboarding()">
+                        <span>التالي</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button class="btn btn-ghost" onclick="goToScreen('authLayer')">تخطي</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== AUTH ==================== -->
+        <div class="screen-layer auth-layer" id="authLayer">
+            <div class="screen-scroll">
+                <div class="auth-visual">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" alt="Auth">
+                    <div class="auth-visual-content">
+                        <h2>ابدأ رحلتك</h2>
+                        <p>أنشئ صور زفاف يمنية استثنائية بالذكاء الاصطناعي</p>
+                    </div>
+                </div>
+                <div class="auth-form">
+                    <div class="input-group">
+                        <label class="input-label">البريد الإلكتروني أو رقم الهاتف</label>
+                        <input type="text" class="input-field" placeholder="example@email.com" id="authEmail">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">كلمة المرور</label>
+                        <input type="password" class="input-field" placeholder="••••••••" id="authPassword">
+                    </div>
+                    <button class="btn btn-primary mt-3" onclick="handleLogin()">
+                        <span>تسجيل الدخول</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="auth-divider">أو</div>
+                    <div class="social-auth">
+                        <button class="social-btn" onclick="showToast('تسجيل الدخول بواسطة Google')">
+                            <i class="fab fa-google"></i>
+                        </button>
+                        <button class="social-btn" onclick="showToast('تسجيل الدخول بواسطة Apple')">
+                            <i class="fab fa-apple"></i>
+                        </button>
+                        <button class="social-btn" onclick="showToast('تسجيل الدخول بواسطة Facebook')">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                    </div>
+                    <div class="auth-footer">
+                        ليس لديك حساب؟ <a onclick="showToast('فتح شاشة التسجيل')">سجل الآن</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== HOME ==================== -->
+        <div class="screen-layer home-layer" id="homeLayer">
+            <div class="screen-scroll">
+                <div class="home-hero">
+                    <div class="home-hero-glow"></div>
+                    <div class="home-welcome-row">
+                        <div>
+                            <div class="home-welcome-text">أهلاً بك في عالم الفخامة</div>
+                            <div class="home-welcome-name">أحمد اليمني</div>
+                        </div>
+                        <div class="home-avatar" onclick="goToScreen('profileLayer')">أ</div>
+                    </div>
+                    <div class="hero-banner">
+                        <div class="hero-banner-bg">
+                            <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" alt="">
+                        </div>
+                        <div class="hero-banner-content">
+                            <h2>أنشئ صورة زفافك اليمنية</h2>
+                            <p>اختر الزي التقليدي، الخلفية، والإضاءة. دع الذكاء الاصطناعي يرسم لحظاتك الذهبية</p>
+                            <div class="hero-stats">
+                                <div class="hero-stat"><i class="fas fa-wand-magic-sparkles"></i> SDXL + LoRA</div>
+                                <div class="hero-stat"><i class="fas fa-image"></i> 4K Ultra HD</div>
+                                <div class="hero-stat"><i class="fas fa-bolt"></i> 30 ثانية</div>
+                            </div>
+                            <button class="btn btn-primary btn-sm" style="width: auto; padding: 12px 24px;" onclick="goToScreen('genLayer')">
+                                <i class="fas fa-wand-magic-sparkles"></i>
+                                <span>ابدأ التوليد</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-row">
+                    <div class="section-label">أنماط الزفاف</div>
+                    <div class="section-link" onclick="goToScreen('genLayer')">عرض الكل <i class="fas fa-chevron-left" style="font-size: 10px;"></i></div>
+                </div>
+
+                <div class="presets-track">
+                    <div class="preset-tile" onclick="goToScreen('genLayer')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg" alt="">
+                        <div class="preset-tile-overlay">
+                            <div class="preset-tile-name">الملكي اليمني</div>
+                            <div class="preset-tile-meta">ذهبي فاخر • تيجان • حرير</div>
+                        </div>
+                        <div class="preset-tile-badge">LoRA</div>
+                    </div>
+                    <div class="preset-tile" onclick="goToScreen('genLayer')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" alt="">
+                        <div class="preset-tile-overlay">
+                            <div class="preset-tile-name">صنعاني تقليدي</div>
+                            <div class="preset-tile-meta">زينة • مسار • رقش فضي</div>
+                        </div>
+                        <div class="preset-tile-badge">SDXL</div>
+                    </div>
+                    <div class="preset-tile" onclick="goToScreen('genLayer')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/blogger.googleusercontent.com/291827920ff0b1a5c674dd0c6611645da52bbb93.JPG" alt="">
+                        <div class="preset-tile-overlay">
+                            <div class="preset-tile-name">حضرمي فاخر</div>
+                            <div class="preset-tile-meta">دواني • حزام فضي • عنبر</div>
+                        </div>
+                        <div class="preset-tile-badge">LoRA</div>
+                    </div>
+                    <div class="preset-tile" onclick="goToScreen('genLayer')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/thearabweekly.com/38f0c93a32844e6fc499e7c848a90c64276a4404.jpg" alt="">
+                        <div class="preset-tile-overlay">
+                            <div class="preset-tile-name">خليجي-يمني</div>
+                            <div class="preset-tile-meta">عصرية بلمسة يمنية</div>
+                        </div>
+                        <div class="preset-tile-badge">AI</div>
+                    </div>
+                    <div class="preset-tile" onclick="goToScreen('genLayer')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" alt="">
+                        <div class="preset-tile-overlay">
+                            <div class="preset-tile-name">كلاسيكي عربي</div>
+                            <div class="preset-tile-meta">مرجان • فضة • ياسمين</div>
+                        </div>
+                        <div class="preset-tile-badge">4K</div>
+                    </div>
+                </div>
+
+                <div class="section-row">
+                    <div class="section-label">إبداعات حديثة</div>
+                    <div class="section-link" onclick="goToScreen('galleryLayer')">المعرض <i class="fas fa-chevron-left" style="font-size: 10px;"></i></div>
+                </div>
+
+                <div class="gallery-masonry">
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg', 'زفاف صنعاني تقليدي')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" alt="">
+                        <div class="gallery-card-ai">AI HD</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">زفاف صنعاني</div>
+                            <div class="gallery-card-time">منذ ساعتين</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg', 'عروس يمنية بالمجوهرات')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" alt="">
+                        <div class="gallery-card-ai">4K</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">عروس بالمجوهرات</div>
+                            <div class="gallery-card-time">منذ ٥ ساعات</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/budgetedwedding.wordpress.com/55deae647332081506d9aef286273b66d8232cd6.png', 'زفاف حضرمي ملكي')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/budgetedwedding.wordpress.com/55deae647332081506d9aef286273b66d8232cd6.png" alt="">
+                        <div class="gallery-card-ai">AI</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">زفاف حضرمي</div>
+                            <div class="gallery-card-time">أمس</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg', 'ثوب زفاف فاخر')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg" alt="">
+                        <div class="gallery-card-ai">HD</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">ثوب ملكي</div>
+                            <div class="gallery-card-time">أمس</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/blogger.googleusercontent.com/291827920ff0b1a5c674dd0c6611645da52bbb93.JPG', 'زي حضرمي تقليدي')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/blogger.googleusercontent.com/291827920ff0b1a5c674dd0c6611645da52bbb93.JPG" alt="">
+                        <div class="gallery-card-ai">LoRA</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">زي حضرمي</div>
+                            <div class="gallery-card-time">منذ يومين</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/thearabweekly.com/38f0c93a32844e6fc499e7c848a90c64276a4404.jpg', 'عريس يمني')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/thearabweekly.com/38f0c93a32844e6fc499e7c848a90c64276a4404.jpg" alt="">
+                        <div class="gallery-card-ai">AI</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">عريس يمني</div>
+                            <div class="gallery-card-time">منذ ٣ أيام</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 100px;"></div>
+            </div>
+        </div>
+
+        <!-- ==================== GENERATION ==================== -->
+        <div class="screen-layer gen-layer" id="genLayer">
+            <div class="app-header safe-top">
+                <button class="header-btn" onclick="goToScreen('homeLayer')">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="app-header-title">توليد صورة الزفاف</div>
+                <button class="header-btn gold" onclick="showToast('المساعدة')">
+                    <i class="fas fa-circle-question"></i>
+                </button>
+            </div>
+            <div class="screen-scroll">
+                <div class="gen-provider-bar">
+                    <div class="provider-pill active" data-provider="replicate" onclick="selectProvider(this)">
+                        <i class="fas fa-server"></i> Replicate SDXL
+                    </div>
+                    <div class="provider-pill" data-provider="leonardo" onclick="selectProvider(this)">
+                        <i class="fas fa-palette"></i> Leonardo AI
+                    </div>
+                    <div class="provider-pill" data-provider="stability" onclick="selectProvider(this)">
+                        <i class="fas fa-shield-halved"></i> Stability AI
+                    </div>
+                </div>
+
+                <div class="section-row" style="margin-top: 0;">
+                    <div class="section-label">اختر النمط</div>
+                    <div class="section-link">LoRA مفعل</div>
+                </div>
+
+                <div class="styles-grid">
+                    <div class="style-tile selected" data-style="royal" onclick="selectStyle(this)">
+                        <img src="https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg" alt="">
+                        <div class="style-tile-mask">
+                            <div class="style-tile-name">الملكي اليمني</div>
+                            <div class="style-tile-desc">ذهبي فاخر، تيجان، حرير</div>
+                        </div>
+                        <div class="style-check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="style-tile" data-style="sanaani" onclick="selectStyle(this)">
+                        <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" alt="">
+                        <div class="style-tile-mask">
+                            <div class="style-tile-name">صنعاني تقليدي</div>
+                            <div class="style-tile-desc">زينة، مسار، رقش فضي</div>
+                        </div>
+                        <div class="style-check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="style-tile" data-style="hadrami" onclick="selectStyle(this)">
+                        <img src="https://kimi-web-img.moonshot.cn/img/blogger.googleusercontent.com/291827920ff0b1a5c674dd0c6611645da52bbb93.JPG" alt="">
+                        <div class="style-tile-mask">
+                            <div class="style-tile-name">حضرمي فاخر</div>
+                            <div class="style-tile-desc">دواني، حزام فضي، عنبر</div>
+                        </div>
+                        <div class="style-check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="style-tile" data-style="gulf" onclick="selectStyle(this)">
+                        <img src="https://kimi-web-img.moonshot.cn/img/thearabweekly.com/38f0c93a32844e6fc499e7c848a90c64276a4404.jpg" alt="">
+                        <div class="style-tile-mask">
+                            <div class="style-tile-name">خليجي-يمني</div>
+                            <div class="style-tile-desc">عصرية بلمسة يمنية</div>
+                        </div>
+                        <div class="style-check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="style-tile" data-style="classic" onclick="selectStyle(this)">
+                        <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" alt="">
+                        <div class="style-tile-mask">
+                            <div class="style-tile-name">كلاسيكي عربي</div>
+                            <div class="style-tile-desc">مرجان، فضة، ياسمين</div>
+                        </div>
+                        <div class="style-check"><i class="fas fa-check"></i></div>
+                    </div>
+                    <div class="style-tile" data-style="modern" onclick="selectStyle(this)">
+                        <img src="https://kimi-web-img.moonshot.cn/img/ritaokrent.com/2744c6f4c495b7208fb70e3c23f450e0742e03c9.jpg" alt="">
+                        <div class="style-tile-mask">
+                            <div class="style-tile-name">عصري أنيق</div>
+                            <div class="style-tile-desc">تصميمات عصرية فاخرة</div>
+                        </div>
+                        <div class="style-check"><i class="fas fa-check"></i></div>
+                    </div>
+                </div>
+
+                <div class="options-panel">
+                    <div class="option-block">
+                        <label class="option-block-label"><i class="fas fa-user"></i> الشخصية</label>
+                        <div class="chips-row">
+                            <div class="chip selected" onclick="toggleChip(this)">عروس</div>
+                            <div class="chip" onclick="toggleChip(this)">عريس</div>
+                            <div class="chip" onclick="toggleChip(this)">زوجان</div>
+                        </div>
+                    </div>
+
+                    <div class="option-block">
+                        <label class="option-block-label"><i class="fas fa-image"></i> الخلفية</label>
+                        <div class="chips-row">
+                            <div class="chip selected" onclick="toggleChip(this)">صنعاء القديمة</div>
+                            <div class="chip" onclick="toggleChip(this)">قصر فاخر</div>
+                            <div class="chip" onclick="toggleChip(this)">جبال اليمن</div>
+                            <div class="chip" onclick="toggleChip(this)">مقلط تقليدي</div>
+                            <div class="chip" onclick="toggleChip(this)">شاطئ عدن</div>
+                            <div class="chip" onclick="toggleChip(this)">صحراء حضرموت</div>
+                        </div>
+                    </div>
+
+                    <div class="option-block">
+                        <label class="option-block-label"><i class="fas fa-gem"></i> التفاصيل</label>
+                        <div class="chips-row">
+                            <div class="chip selected" onclick="toggleChip(this)">مجوهرات فضية</div>
+                            <div class="chip" onclick="toggleChip(this)">جنابي</div>
+                            <div class="chip" onclick="toggleChip(this)">حنة يمنية</div>
+                            <div class="chip" onclick="toggleChip(this)">ياسمين</div>
+                            <div class="chip" onclick="toggleChip(this)">بخور</div>
+                            <div class="chip" onclick="toggleChip(this)">برع تقليدي</div>
+                        </div>
+                    </div>
+
+                    <div class="option-block">
+                        <label class="option-block-label"><i class="fas fa-lightbulb"></i> الإضاءة السينمائية</label>
+                        <div class="chips-row">
+                            <div class="chip" onclick="toggleChip(this)">ذهبية دافئة</div>
+                            <div class="chip selected" onclick="toggleChip(this)">سينمائية</div>
+                            <div class="chip" onclick="toggleChip(this)">طبيعية</div>
+                            <div class="chip" onclick="toggleChip(this)">درامية</div>
+                            <div class="chip premium-chip" onclick="toggleChip(this)">استوديو احترافي</div>
+                            <div class="chip premium-chip" onclick="toggleChip(this)">Golden Hour</div>
+                        </div>
+                    </div>
+
+                    <div class="option-block">
+                        <label class="option-block-label"><i class="fas fa-expand"></i> جودة الصورة</label>
+                        <div class="chips-row">
+                            <div class="chip" onclick="toggleChip(this)">HD</div>
+                            <div class="chip selected" onclick="toggleChip(this)">2K</div>
+                            <div class="chip premium-chip" onclick="toggleChip(this)">4K Ultra</div>
+                            <div class="chip premium-chip" onclick="toggleChip(this)">8K Studio</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 120px;"></div>
+            </div>
+            <button class="fab-generate" id="fabGenerate" onclick="startGeneration()">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                <span>توليد بالذكاء الاصطناعي</span>
+            </button>
+        </div>
+
+        <!-- ==================== LOADING ==================== -->
+        <div class="screen-layer loading-layer" id="loadingLayer">
+            <div class="gen-visualizer">
+                <div class="gen-ring-outer"></div>
+                <div class="gen-ring-inner"></div>
+                <div class="gen-core">
+                    <i class="fas fa-crown"></i>
+                </div>
+            </div>
+            <div class="gen-status">
+                <h3 id="genStatusTitle">جاري التوليد...</h3>
+                <p id="genStatusSub">SDXL + LoRA Yemen Wedding v2</p>
+            </div>
+            <div class="gen-progress-track">
+                <div class="gen-progress-fill" id="genProgressBar"></div>
+            </div>
+            <div class="gen-pipeline" id="genPipeline">
+                <div class="gen-step active" data-step="0">
+                    <div class="gen-step-icon"><i class="fas fa-brain"></i></div>
+                    <div class="gen-step-text">تحليل النمط اليمني</div>
+                    <div class="gen-step-time">0.2s</div>
+                </div>
+                <div class="gen-step" data-step="1">
+                    <div class="gen-step-icon"><i class="fas fa-shirt"></i></div>
+                    <div class="gen-step-text">توليد الزي التقليدي (LoRA)</div>
+                    <div class="gen-step-time">--</div>
+                </div>
+                <div class="gen-step" data-step="2">
+                    <div class="gen-step-icon"><i class="fas fa-gem"></i></div>
+                    <div class="gen-step-text">إضافة المجوهرات والتفاصيل</div>
+                    <div class="gen-step-time">--</div>
+                </div>
+                <div class="gen-step" data-step="3">
+                    <div class="gen-step-icon"><i class="fas fa-sun"></i></div>
+                    <div class="gen-step-text">معالجة الإضاءة السينمائية</div>
+                    <div class="gen-step-time">--</div>
+                </div>
+                <div class="gen-step" data-step="4">
+                    <div class="gen-step-icon"><i class="fas fa-face-smile"></i></div>
+                    <div class="gen-step-text">تحسين الوجه (GFPGAN)</div>
+                    <div class="gen-step-time">--</div>
+                </div>
+                <div class="gen-step" data-step="5">
+                    <div class="gen-step-icon"><i class="fas fa-wand-sparkles"></i></div>
+                    <div class="gen-step-text">اللمسات النهائية (CodeFormer)</div>
+                    <div class="gen-step-time">--</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== RESULT ==================== -->
+        <div class="screen-layer result-layer" id="resultLayer">
+            <div class="screen-scroll">
+                <div class="result-image-wrap">
+                    <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" id="resultImage" alt="Result">
+                    <div class="result-image-actions">
+                        <button class="result-img-btn" onclick="goToScreen('homeLayer')">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="result-img-btn" onclick="openShareModal()">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                            <button class="result-img-btn" onclick="showToast('تمت الإضافة للمفضلة')">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-watermark">
+                        <i class="fas fa-crown"></i>
+                        Yemen Wedding AI
+                    </div>
+                </div>
+
+                <div class="result-details">
+                    <div class="result-meta-row">
+                        <div class="result-title">زفاف صنعاني ملكي</div>
+                        <div class="ai-tag"><i class="fas fa-sparkles"></i> SDXL + LoRA</div>
+                    </div>
+                    <div class="result-submeta">الملكي اليمني • صنعاء القديمة • مجوهرات فضية • 4K Ultra HD • GFPGAN</div>
+
+                    <div class="ba-wrapper" id="baWrapper">
+                        <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" class="ba-before" id="baBefore" alt="Before">
+                        <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" class="ba-after" id="baAfter" alt="After">
+                        <div class="ba-slider" id="baSlider">
+                            <div class="ba-slider-knob"><i class="fas fa-arrows-left-right" style="color: var(--black-950); font-size: 12px;"></i></div>
+                        </div>
+                        <div class="ba-label before">قبل</div>
+                        <div class="ba-label after">بعد</div>
+                    </div>
+
+                    <div class="result-actions-grid">
+                        <button class="result-action-btn" onclick="showToast('تم الحفظ في المعرض')">
+                            <i class="fas fa-download"></i>
+                            <span>حفظ</span>
+                        </button>
+                        <button class="result-action-btn" onclick="openShareModal()">
+                            <i class="fas fa-share-nodes"></i>
+                            <span>مشاركة</span>
+                        </button>
+                        <button class="result-action-btn" onclick="showToast('تم النسخ إلى الحافظة')">
+                            <i class="fas fa-copy"></i>
+                            <span>نسخ</span>
+                        </button>
+                        <button class="result-action-btn" onclick="showToast('تمت الإضافة للمفضلة')">
+                            <i class="fas fa-heart"></i>
+                            <span>مفضلة</span>
+                        </button>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="goToScreen('genLayer')">
+                        <i class="fas fa-rotate-right"></i>
+                        <span>توليد صورة جديدة</span>
+                    </button>
+                    <button class="btn btn-secondary mt-2" onclick="goToScreen('subLayer')">
+                        <i class="fas fa-crown"></i>
+                        <span>ترقية لإزالة العلامة المائية</span>
+                    </button>
+                </div>
+                <div style="height: 40px;"></div>
+            </div>
+        </div>
+
+        <!-- ==================== GALLERY ==================== -->
+        <div class="screen-layer" id="galleryLayer">
+            <div class="app-header safe-top">
+                <button class="header-btn" onclick="goToScreen('homeLayer')">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="app-header-title">معرض الإبداعات</div>
+                <button class="header-btn gold" onclick="showToast('بحث')">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="screen-scroll">
+                <div class="gen-provider-bar" style="margin-top: 8px;">
+                    <div class="provider-pill active" onclick="selectGalleryTab(this)">الكل</div>
+                    <div class="provider-pill" onclick="selectGalleryTab(this)">عروس</div>
+                    <div class="provider-pill" onclick="selectGalleryTab(this)">عريس</div>
+                    <div class="provider-pill" onclick="selectGalleryTab(this)">أزواج</div>
+                    <div class="provider-pill" onclick="selectGalleryTab(this)">المفضلة</div>
+                </div>
+                <div class="gallery-masonry" style="margin-top: 16px;">
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg', 'زفاف صنعاني')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" alt="">
+                        <div class="gallery-card-ai">AI</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">زفاف صنعاني</div>
+                            <div class="gallery-card-time">اليوم</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg', 'عروس بالمجوهرات')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" alt="">
+                        <div class="gallery-card-ai">4K</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">عروس بالمجوهرات</div>
+                            <div class="gallery-card-time">اليوم</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg', 'ثوب ملكي')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg" alt="">
+                        <div class="gallery-card-ai">HD</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">ثوب ملكي</div>
+                            <div class="gallery-card-time">أمس</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/budgetedwedding.wordpress.com/55deae647332081506d9aef286273b66d8232cd6.png', 'زفاف حضرمي')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/budgetedwedding.wordpress.com/55deae647332081506d9aef286273b66d8232cd6.png" alt="">
+                        <div class="gallery-card-ai">AI</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">زفاف حضرمي</div>
+                            <div class="gallery-card-time">أمس</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/blogger.googleusercontent.com/291827920ff0b1a5c674dd0c6611645da52bbb93.JPG', 'زي حضرمي')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/blogger.googleusercontent.com/291827920ff0b1a5c674dd0c6611645da52bbb93.JPG" alt="">
+                        <div class="gallery-card-ai">LoRA</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">زي حضرمي</div>
+                            <div class="gallery-card-time">منذ يومين</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/thearabweekly.com/38f0c93a32844e6fc499e7c848a90c64276a4404.jpg', 'عريس يمني')">
+                        <img src="https://kimi-web-img.moonshot.cn/img/thearabweekly.com/38f0c93a32844e6fc499e7c848a90c64276a4404.jpg" alt="">
+                        <div class="gallery-card-ai">AI</div>
+                        <div class="gallery-card-info">
+                            <div class="gallery-card-title">عريس يمني</div>
+                            <div class="gallery-card-time">منذ ٣ أيام</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 100px;"></div>
+            </div>
+        </div>
+
+        <!-- ==================== SUBSCRIPTION ==================== -->
+        <div class="screen-layer sub-layer" id="subLayer">
+            <div class="app-header safe-top">
+                <button class="header-btn" onclick="goToScreen('homeLayer')">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="app-header-title">خطط الاشتراك</div>
+                <div style="width: 40px;"></div>
+            </div>
+            <div class="screen-scroll">
+                <div class="sub-hero">
+                    <h2>اختر خطتك المثالية</h2>
+                    <p>أطلق العنان لإبداعك مع ميزات احترافية</p>
+                </div>
+                <div class="plans-grid">
+                    <div class="plan-card" onclick="showToast('تم اختيار الخطة المجانية')">
+                        <div class="plan-header">
+                            <div class="plan-name">مجاني</div>
+                            <div class="plan-price">
+                                <div class="plan-price-amount">$0 <span>/شهر</span></div>
+                            </div>
+                        </div>
+                        <div class="plan-desc">ابدأ رحلتك مع ٥ توليدات مجانية شهرياً</div>
+                        <div class="plan-features">
+                            <div class="plan-feature"><i class="fas fa-check"></i> ٥ توليدات/شهر</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> جودة HD</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> ٣ أنماط أساسية</div>
+                            <div class="plan-feature locked"><i class="fas fa-lock"></i> بدون علامة مائية</div>
+                            <div class="plan-feature locked"><i class="fas fa-lock"></i> LoRA مخصص</div>
+                        </div>
+                    </div>
+
+                    <div class="plan-card featured" onclick="showToast('فتح شاشة الدفع - Premium')">
+                        <div class="plan-header">
+                            <div class="plan-name">بريميوم</div>
+                            <div class="plan-price">
+                                <div class="plan-price-amount">$9.99 <span>/شهر</span></div>
+                            </div>
+                        </div>
+                        <div class="plan-desc">للمستخدمين المحترفين والمصورين</div>
+                        <div class="plan-features">
+                            <div class="plan-feature"><i class="fas fa-check"></i> ١٠٠ توليد/شهر</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> جودة 4K Ultra</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> جميع الأنماط + LoRA</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> بدون علامة مائية</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> GFPGAN + CodeFormer</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> مشاركة مباشرة</div>
+                        </div>
+                        <button class="btn btn-primary mt-3">
+                            <span>اشترك الآن</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+
+                    <div class="plan-card" onclick="showToast('فتح شاشة الدفع - VIP')">
+                        <div class="plan-header">
+                            <div class="plan-name">VIP Wedding Studio</div>
+                            <div class="plan-price">
+                                <div class="plan-price-amount">$29.99 <span>/شهر</span></div>
+                            </div>
+                        </div>
+                        <div class="plan-desc">استوديو زفاف متكامل بالذكاء الاصطناعي</div>
+                        <div class="plan-features">
+                            <div class="plan-feature"><i class="fas fa-check"></i> توليدات غير محدودة</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> جودة 8K Studio</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> LoRA مخصص خاص بك</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> توليد فيديو AI</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> دعم فني 24/7</div>
+                            <div class="plan-feature"><i class="fas fa-check"></i> API Access</div>
+                        </div>
+                        <button class="btn btn-secondary mt-3">
+                            <span>اكتشف المزيد</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+                <div style="height: 40px;"></div>
+            </div>
+        </div>
+
+        <!-- ==================== PROFILE ==================== -->
+        <div class="screen-layer" id="profileLayer">
+            <div class="app-header safe-top">
+                <button class="header-btn" onclick="goToScreen('homeLayer')">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="app-header-title">حسابي</div>
+                <button class="header-btn" onclick="goToScreen('settingsLayer')">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+            <div class="screen-scroll">
+                <div class="profile-header">
+                    <div class="profile-avatar-lg">أ</div>
+                    <div class="profile-name">أحمد اليمني</div>
+                    <div class="profile-tier">
+                        <i class="fas fa-crown"></i>
+                        بريميوم
+                    </div>
+                    <div class="profile-stats-row">
+                        <div class="profile-stat">
+                            <div class="profile-stat-value">١٢٤</div>
+                            <div class="profile-stat-label">توليد</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value">٤٨</div>
+                            <div class="profile-stat-label">مفضلة</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value">١٢</div>
+                            <div class="profile-stat-label">مشاركة</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-list">
+                    <div class="settings-group">
+                        <div class="settings-item" onclick="goToScreen('galleryLayer')">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-images"></i></div>
+                                <div class="settings-item-text">معرضي</div>
+                            </div>
+                            <div class="settings-item-right">
+                                <div class="settings-item-value">١٢٤ صورة</div>
+                                <i class="fas fa-chevron-left" style="color: var(--black-600); font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        <div class="settings-item" onclick="goToScreen('subLayer')">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-crown"></i></div>
+                                <div class="settings-item-text">خطتي</div>
+                            </div>
+                            <div class="settings-item-right">
+                                <div class="settings-item-value" style="color: var(--gold-400);">بريميوم</div>
+                                <i class="fas fa-chevron-left" style="color: var(--black-600); font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        <div class="settings-item" onclick="showToast('فتح سجل الفواتير')">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-credit-card"></i></div>
+                                <div class="settings-item-text">الفواتير</div>
+                            </div>
+                            <div class="settings-item-right">
+                                <i class="fas fa-chevron-left" style="color: var(--black-600); font-size: 12px;"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="settings-item" onclick="showToast('تم تسجيل الخروج')">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon" style="background: rgba(139,38,53,0.1); color: var(--red-light);"><i class="fas fa-right-from-bracket"></i></div>
+                                <div class="settings-item-text" style="color: var(--red-light);">تسجيل الخروج</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 40px;"></div>
+            </div>
+        </div>
+
+        <!-- ==================== SETTINGS ==================== -->
+        <div class="screen-layer" id="settingsLayer">
+            <div class="app-header safe-top">
+                <button class="header-btn" onclick="goToScreen('profileLayer')">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <div class="app-header-title">الإعدادات</div>
+                <div style="width: 40px;"></div>
+            </div>
+            <div class="screen-scroll">
+                <div class="settings-list" style="padding-top: 16px;">
+                    <div class="settings-group">
+                        <div class="settings-item">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-moon"></i></div>
+                                <div class="settings-item-text">الوضع المظلم</div>
+                            </div>
+                            <div class="toggle on" onclick="toggleSwitch(this)">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </div>
+                        <div class="settings-item">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-bell"></i></div>
+                                <div class="settings-item-text">الإشعارات</div>
+                            </div>
+                            <div class="toggle on" onclick="toggleSwitch(this)">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </div>
+                        <div class="settings-item">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-wand-sparkles"></i></div>
+                                <div class="settings-item-text">جودة عالية تلقائياً</div>
+                            </div>
+                            <div class="toggle" onclick="toggleSwitch(this)">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </div>
+                        <div class="settings-item">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-wifi"></i></div>
+                                <div class="settings-item-text">وضع عدم الاتصال</div>
+                            </div>
+                            <div class="toggle" onclick="toggleSwitch(this)">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="settings-item" onclick="showToast('تغيير اللغة')">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-globe"></i></div>
+                                <div class="settings-item-text">اللغة</div>
+                            </div>
+                            <div class="settings-item-right">
+                                <div class="settings-item-value">العربية</div>
+                                <i class="fas fa-chevron-left" style="color: var(--black-600); font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        <div class="settings-item" onclick="showToast('تغيير جودة التصدير')">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-image"></i></div>
+                                <div class="settings-item-text">جودة التصدير</div>
+                            </div>
+                            <div class="settings-item-right">
+                                <div class="settings-item-value">4K Ultra</div>
+                                <i class="fas fa-chevron-left" style="color: var(--black-600); font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        <div class="settings-item" onclick="showToast('تغيير المظهر')">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-palette"></i></div>
+                                <div class="settings-item-text">المظهر</div>
+                            </div>
+                            <div class="settings-item-right">
+                                <div class="settings-item-value">ذهبي فاخر</div>
+                                <i class="fas fa-chevron-left" style="color: var(--black-600); font-size: 12px;"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <div class="settings-item" onclick="goToScreen('subLayer')">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-star"></i></div>
+                                <div class="settings-item-text">ترقية للنسخة المميزة</div>
+                            </div>
+                            <div class="settings-item-right">
+                                <i class="fas fa-chevron-left" style="color: var(--black-600); font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        <div class="settings-item" onclick="showToast('المساعدة والدعم')">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-circle-question"></i></div>
+                                <div class="settings-item-text">المساعدة والدعم</div>
+                            </div>
+                            <div class="settings-item-right">
+                                <i class="fas fa-chevron-left" style="color: var(--black-600); font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        <div class="settings-item" onclick="showToast('سياسة الخصوصية')">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-shield-halved"></i></div>
+                                <div class="settings-item-text">سياسة الخصوصية</div>
+                            </div>
+                            <div class="settings-item-right">
+                                <i class="fas fa-chevron-left" style="color: var(--black-600); font-size: 12px;"></i>
+                            </div>
+                        </div>
+                        <div class="settings-item" onclick="showToast('حول التطبيق')">
+                            <div class="settings-item-left">
+                                <div class="settings-item-icon"><i class="fas fa-info-circle"></i></div>
+                                <div class="settings-item-text">حول التطبيق</div>
+                            </div>
+                            <div class="settings-item-right">
+                                <div class="settings-item-value">v2.0.0</div>
+                                <i class="fas fa-chevron-left" style="color: var(--black-600); font-size: 12px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 24px; color: var(--black-600); font-size: 12px; font-weight: 600;">
+                    Yemen Wedding AI v2.0.0 Production<br>
+                    صنع بحب للتراث اليمني 🇾🇪
+                </div>
+                <div style="height: 40px;"></div>
+            </div>
+        </div>
+
+        <!-- ==================== FULL IMAGE VIEW ==================== -->
+        <div class="full-image-layer" id="fullImageLayer">
+            <div class="full-image-header">
+                <button class="header-btn" onclick="closeFullImage()">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <div style="font-size: 14px; font-weight: 800;" id="fullImageTitle">صورة الزفاف</div>
+                <button class="header-btn" onclick="openShareModal()">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+            </div>
+            <img src="" id="fullImageSrc" alt="Full">
+        </div>
+
+        <!-- ==================== SHARE MODAL ==================== -->
+        <div class="modal-overlay" id="shareModal" onclick="closeShareModal(event)">
+            <div class="modal-sheet" onclick="event.stopPropagation()">
+                <div class="modal-handle"></div>
+                <div class="modal-title">مشاركة الصورة</div>
+                <div class="share-grid">
+                    <div class="share-item" onclick="showToast('تمت المشاركة على واتساب')">
+                        <div class="share-icon whatsapp"><i class="fab fa-whatsapp"></i></div>
+                        <div class="share-label">واتساب</div>
+                    </div>
+                    <div class="share-item" onclick="showToast('تمت المشاركة على انستقرام')">
+                        <div class="share-icon instagram"><i class="fab fa-instagram"></i></div>
+                        <div class="share-label">انستقرام</div>
+                    </div>
+                    <div class="share-item" onclick="showToast('تمت المشاركة على تيك توك')">
+                        <div class="share-icon tiktok"><i class="fab fa-tiktok"></i></div>
+                        <div class="share-label">تيك توك</div>
+                    </div>
+                    <div class="share-item" onclick="showToast('تم نسخ الرابط')">
+                        <div class="share-icon copy"><i class="fas fa-link"></i></div>
+                        <div class="share-label">نسخ الرابط</div>
+                    </div>
+                </div>
+                <button class="modal-close-btn" onclick="closeShareModal()">إغلاق</button>
+            </div>
+        </div>
+
+        <!-- ==================== BOTTOM NAV ==================== -->
+        <div class="bottom-nav" id="bottomNav">
+            <button class="nav-item active" data-nav="home" onclick="navFromBottom(this, 'homeLayer')">
+                <i class="fas fa-house"></i>
+                <span>الرئيسية</span>
+            </button>
+            <button class="nav-item" data-nav="gallery" onclick="navFromBottom(this, 'galleryLayer')">
+                <i class="fas fa-images"></i>
+                <span>المعرض</span>
+            </button>
+            <button class="nav-fab" onclick="goToScreen('genLayer')">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button class="nav-item" data-nav="sub" onclick="navFromBottom(this, 'subLayer')">
+                <i class="fas fa-crown"></i>
+                <span>بريميوم</span>
+            </button>
+            <button class="nav-item" data-nav="profile" onclick="navFromBottom(this, 'profileLayer')">
+                <i class="fas fa-user"></i>
+                <span>حسابي</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+    // ==================== APP STATE ====================
+    const AppState = {
+        user: null,
+        currentScreen: 'splashLayer',
+        generation: {
+            provider: 'replicate',
+            style: 'royal',
+            quality: '2K',
+            character: 'عروس',
+            background: 'صنعاء القديمة',
+            details: ['مجوهرات فضية'],
+            lighting: 'سينمائية'
+        },
+        settings: {
+            darkMode: true,
+            notifications: true,
+            autoHD: false,
+            offlineMode: false,
+            language: 'ar',
+            exportQuality: '4K',
+            theme: 'gold'
+        },
+        gallery: [],
+        subscription: 'free'
+    };
+
+    // ==================== SCREEN NAVIGATION ====================
+    function goToScreen(screenId) {
+        const screens = document.querySelectorAll('.screen-layer');
+        const bottomNav = document.getElementById('bottomNav');
+        const fab = document.getElementById('fabGenerate');
+
+        screens.forEach(s => {
+            if (s.id === screenId) {
+                s.classList.add('active');
+            } else {
+                s.classList.remove('active');
+            }
+        });
+
+        AppState.currentScreen = screenId;
+
+        // Bottom nav visibility
+        const navScreens = ['homeLayer', 'galleryLayer', 'subLayer', 'profileLayer', 'settingsLayer'];
+        if (navScreens.includes(screenId)) {
+            bottomNav.style.display = 'flex';
+            updateNavActive(screenId);
+        } else {
+            bottomNav.style.display = 'none';
+        }
+
+        // FAB visibility
+        if (screenId === 'genLayer') {
+            setTimeout(() => fab.classList.add('visible'), 400);
+        } else {
+            fab.classList.remove('visible');
+        }
+    }
+
+    function updateNavActive(screenId) {
+        const map = {
+            'homeLayer': 'home',
+            'galleryLayer': 'gallery',
+            'subLayer': 'sub',
+            'profileLayer': 'profile',
+            'settingsLayer': 'profile'
+        };
+        const target = map[screenId];
+        document.querySelectorAll('.nav-item').forEach(n => {
+            n.classList.toggle('active', n.dataset.nav === target);
+        });
+    }
+
+    function navFromBottom(item, screenId) {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        goToScreen(screenId);
+    }
+
+    // ==================== SPLASH ====================
+    setTimeout(() => {
+        goToScreen('onboardingLayer');
+    }, 3200);
+
+    // ==================== ONBOARDING ====================
+    const onboardingData = [
+        {
+            img: 'https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg',
+            title: 'تراث يمني أصيل',
+            desc: 'اكتشف جمال الأزياء اليمنية التقليدية بأدق التفاصيل، من الثوب الصنعاني إلى الزي الحضرمي الفاخر'
+        },
+        {
+            img: 'https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg',
+            title: 'مجوهرات فاخرة',
+            desc: 'توليد صور واقعية للمجوهرات اليمنية التقليدية، الفضة، المرجان، والعنبر بجودة استوديو احترافية'
+        },
+        {
+            img: 'https://kimi-web-img.moonshot.cn/img/budgetedwedding.wordpress.com/55deae647332081506d9aef286273b66d8232cd6.png',
+            title: 'ذكاء اصطناعي متقدم',
+            desc: 'أحدث نماذج الذكاء الاصطناعي لإنتاج صور زفاف يمنية سينمائية بإضاءة احترافية وتفاصيل دقيقة'
+        }
+    ];
+
+    let onboardingIdx = 0;
+
+    function nextOnboarding() {
+        if (onboardingIdx < onboardingData.length - 1) {
+            onboardingIdx++;
+            updateOnboarding();
+        } else {
+            goToScreen('authLayer');
+        }
+    }
+
+    function updateOnboarding() {
+        const data = onboardingData[onboardingIdx];
+        document.getElementById('onboardingImg').src = data.img;
+        document.getElementById('onboardingTitle').textContent = data.title;
+        document.getElementById('onboardingDesc').textContent = data.desc;
+
+        document.querySelectorAll('.onboarding-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === onboardingIdx);
+        });
+
+        const btn = document.getElementById('onboardingBtn');
+        if (onboardingIdx === onboardingData.length - 1) {
+            btn.innerHTML = '<span>ابدأ الآن</span> <i class="fas fa-arrow-left"></i>';
+        }
+    }
+
+    // ==================== AUTH ====================
+    function handleLogin() {
+        const email = document.getElementById('authEmail').value;
+        const pass = document.getElementById('authPassword').value;
+        if (!email || !pass) {
+            showToast('يرجى إدخال البريد وكلمة المرور');
+            return;
+        }
+        AppState.user = { email, name: 'أحمد اليمني', tier: 'premium' };
+        showToast('تم تسجيل الدخول بنجاح');
+        goToScreen('homeLayer');
+    }
+
+    // ==================== GENERATION ====================
+    function selectProvider(pill) {
+        document.querySelectorAll('.provider-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        AppState.generation.provider = pill.dataset.provider;
+    }
+
+    function selectStyle(tile) {
+        document.querySelectorAll('.style-tile').forEach(t => t.classList.remove('selected'));
+        tile.classList.add('selected');
+        AppState.generation.style = tile.dataset.style;
+    }
+
+    function toggleChip(chip) {
+        const parent = chip.parentElement;
+        const isSingle = parent.children.length <= 3;
+        if (isSingle) {
+            parent.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+        }
+        chip.classList.toggle('selected');
+    }
+
+    // ==================== GENERATION PIPELINE ====================
+    function startGeneration() {
+        goToScreen('loadingLayer');
+
+        const steps = [
+            { text: 'تحليل النمط اليمني', time: '0.2s', icon: 'fa-brain' },
+            { text: 'توليد الزي التقليدي (LoRA)', time: '2.4s', icon: 'fa-shirt' },
+            { text: 'إضافة المجوهرات والتفاصيل', time: '1.8s', icon: 'fa-gem' },
+            { text: 'معالجة الإضاءة السينمائية', time: '3.2s', icon: 'fa-sun' },
+            { text: 'تحسين الوجه (GFPGAN)', time: '4.1s', icon: 'fa-face-smile' },
+            { text: 'اللمسات النهائية (CodeFormer)', time: '2.0s', icon: 'fa-wand-sparkles' }
+        ];
+
+        const bar = document.getElementById('genProgressBar');
+        const title = document.getElementById('genStatusTitle');
+        const sub = document.getElementById('genStatusSub');
+        const pipeline = document.getElementById('genPipeline');
+
+        let progress = 0;
+        let currentStep = 0;
+
+        // Reset steps
+        pipeline.querySelectorAll('.gen-step').forEach((s, i) => {
+            s.classList.remove('active', 'done');
+            if (i === 0) s.classList.add('active');
+        });
+
+        const interval = setInterval(() => {
+            progress += Math.random() * 12 + 4;
+            if (progress > 100) progress = 100;
+            bar.style.width = progress + '%';
+
+            const stepIdx = Math.floor((progress / 100) * steps.length);
+            if (stepIdx > currentStep && stepIdx < steps.length) {
+                const prevSteps = pipeline.querySelectorAll('.gen-step');
+                prevSteps[currentStep].classList.remove('active');
+                prevSteps[currentStep].classList.add('done');
+                prevSteps[currentStep].querySelector('.gen-step-time').textContent = steps[currentStep].time;
+
+                currentStep = stepIdx;
+                prevSteps[currentStep].classList.add('active');
+                title.textContent = steps[currentStep].text + '...';
+            }
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                prevSteps = pipeline.querySelectorAll('.gen-step');
+                prevSteps[currentStep].classList.remove('active');
+                prevSteps[currentStep].classList.add('done');
+                prevSteps[currentStep].querySelector('.gen-step-time').textContent = steps[currentStep].time;
+                title.textContent = 'اكتمل التوليد!';
+                sub.textContent = 'جاري تحميل النتيجة...';
+                setTimeout(() => {
+                    goToScreen('resultLayer');
+                    showToast('تم توليد الصورة بنجاح');
+                }, 800);
+            }
+        }, 350);
+    }
+
+    // ==================== BEFORE/AFTER SLIDER ====================
+    const baWrapper = document.getElementById('baWrapper');
+    const baSlider = document.getElementById('baSlider');
+    const baBefore = document.getElementById('baBefore');
+    let baDragging = false;
+
+    function updateBA(x) {
+        const rect = baWrapper.getBoundingClientRect();
+        let pct = ((x - rect.left) / rect.width) * 100;
+        pct = Math.max(5, Math.min(95, pct));
+        baSlider.style.left = pct + '%';
+        baBefore.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    }
+
+    baSlider.addEventListener('mousedown', () => baDragging = true);
+    baSlider.addEventListener('touchstart', () => baDragging = true);
+    document.addEventListener('mouseup', () => baDragging = false);
+    document.addEventListener('touchend', () => baDragging = false);
+    document.addEventListener('mousemove', e => { if (baDragging) updateBA(e.clientX); });
+    document.addEventListener('touchmove', e => { if (baDragging) updateBA(e.touches[0].clientX); });
+    baWrapper.addEventListener('click', e => updateBA(e.clientX));
+
+    // ==================== FULL IMAGE ====================
+    function openFullImage(src, title) {
+        document.getElementById('fullImageSrc').src = src;
+        document.getElementById('fullImageTitle').textContent = title;
+        document.getElementById('fullImageLayer').classList.add('open');
+    }
+
+    function closeFullImage() {
+        document.getElementById('fullImageLayer').classList.remove('open');
+    }
+
+    // ==================== SHARE MODAL ====================
+    function openShareModal() {
+        document.getElementById('shareModal').classList.add('open');
+    }
+
+    function closeShareModal(e) {
+        if (!e || e.target.id === 'shareModal') {
+            document.getElementById('shareModal').classList.remove('open');
+        }
+    }
+
+    // ==================== TOAST ====================
+    function showToast(text) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastText').textContent = text;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    // ==================== TOGGLE ====================
+    function toggleSwitch(toggle) {
+        toggle.classList.toggle('on');
+    }
+
+    // ==================== GALLERY TABS ====================
+    function selectGalleryTab(tab) {
+        document.querySelectorAll('#galleryLayer .provider-pill').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+    }
+
+    // ==================== INIT ====================
+    document.getElementById('bottomNav').style.display = 'none';
+    </script>
+</body>
+</html>
