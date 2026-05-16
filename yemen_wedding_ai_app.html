@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Yemen Wedding AI - يمن ويدينج اي اي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F4D03F;
+            --gold-dark: #B8860B;
+            --black: #0A0A0A;
+            --black-light: #121212;
+            --black-lighter: #1A1A1A;
+            --black-card: #161616;
+            --white: #FFFFFF;
+            --white-soft: #F5F5F5;
+            --gray: #8A8A8A;
+            --gray-dark: #4A4A4A;
+            --green: #1B3A2F;
+            --green-light: #2D5A4A;
+            --red-accent: #8B2635;
+            --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #F4D03F 50%, #B8860B 100%);
+            --gradient-dark: linear-gradient(180deg, #0A0A0A 0%, #121212 100%);
+            --shadow-gold: 0 4px 20px rgba(212, 175, 55, 0.15);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Phone Frame */
+        .phone-frame {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            max-height: 932px;
+            background: var(--black);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.1);
+        }
+
+        @media (min-width: 440px) {
+            .phone-frame {
+                height: 90vh;
+                border-radius: 40px;
+                border: 1px solid rgba(212, 175, 55, 0.2);
+            }
+        }
+
+        /* Screen Management */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            scrollbar-width: none;
+        }
+
+        .screen::-webkit-scrollbar {
+            display: none;
+        }
+
+        .screen.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: scale(1);
+            z-index: 10;
+        }
+
+        .screen.slide-left {
+            transform: translateX(-100%);
+        }
+
+        .screen.slide-right {
+            transform: translateX(100%);
+        }
+
+        /* Splash Screen */
+        .splash-screen {
+            background: var(--gradient-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .splash-logo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: var(--gradient-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.3);
+            animation: pulse-gold 2s ease-in-out infinite;
+            margin-bottom: 30px;
+        }
+
+        .splash-logo i {
+            font-size: 60px;
+            color: var(--black);
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 60px rgba(212, 175, 55, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 0 80px rgba(212, 175, 55, 0.5); }
+        }
+
+        .splash-title {
+            font-size: 32px;
+            font-weight: 900;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .splash-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        .splash-loader {
+            margin-top: 40px;
+            width: 120px;
+            height: 3px;
+            background: var(--black-lighter);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .splash-loader-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-gold);
+            border-radius: 3px;
+            animation: load-bar 2.5s ease-in-out forwards;
+        }
+
+        @keyframes load-bar {
+            0% { width: 0%; }
+            50% { width: 60%; }
+            100% { width: 100%; }
+        }
+
+        /* Onboarding */
+        .onboarding-screen {
+            background: var(--black);
+        }
+
+        .onboarding-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .onboarding-slides {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .onboarding-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s ease;
+        }
+
+        .onboarding-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .onboarding-slide.prev {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .onboarding-image {
+            width: 280px;
+            height: 280px;
+            border-radius: var(--radius-xl);
+            object-fit: cover;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-gold);
+            border: 2px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .onboarding-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .onboarding-desc {
+            font-size: 15px;
+            color: var(--gray);
+            text-align: center;
+            line-height: 1.7;
+            max-width: 300px;
+        }
+
+        .onboarding-dots {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray-dark);
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 24px;
+            border-radius: 4px;
+            background: var(--gold);
+        }
+
+        .onboarding-buttons {
+            padding: 0 30px 40px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-gold);
+            color: var(--black);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gold);
+            border: 1.5px solid var(--gold);
+            margin-top: 12px;
+        }
+
+        /* Home Screen */
+        .home-screen {
+            background: var(--black);
+            padding-bottom: 100px;
+        }
+
+        .home-header {
+            padding: 50px 20px 20px;
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.08) 0%, transparent 100%);
+        }
+
+        .home-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .home-logo-text {
+            font-size: 22px;
+            font-weight: 900;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .home-header-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--black-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .home-welcome {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 4px;
+        }
+
+        .home-name {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        /* Hero Card */
+        .hero-card {
+            margin: 0 20px 24px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(27, 58, 47, 0.3) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: var(--radius-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            animation: rotate-slow 20s linear infinite;
+        }
+
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-desc {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+
+        .hero-btn {
+            background: var(--gradient-gold);
+            color: var(--black);
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+            box-shadow: var(--shadow-gold);
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 16px;
+            margin-top: 24px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .section-link {
+            font-size: 13px;
+            color: var(--gold);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Style Presets */
+        .presets-scroll {
+            display: flex;
+            gap: 12px;
+            padding: 0 20px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-bottom: 8px;
+        }
+
+        .presets-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .preset-card {
+            min-width: 140px;
+            height: 180px;
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .preset-card.active {
+            border-color: var(--gold);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .preset-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .preset-card:hover img,
+        .preset-card:active img {
+            transform: scale(1.1);
+        }
+
+        .preset-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px 12px 12px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        }
+
+        .preset-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .preset-count {
+            font-size: 11px;
+            color: var(--gold);
+            margin-top: 2px;
+        }
+
+        /* Recent Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 0 20px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 3/4;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img,
+        .gallery-item:active img {
+            transform: scale(1.05);
+        }
+
+        .gallery-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            color: var(--gold);
+            font-weight: 600;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .gallery-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        }
+
+        .gallery-style {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .gallery-date {
+            font-size: 10px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 10px 10px;
+            z-index: 50;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--gold);
+        }
+
+        .nav-item:not(.active) {
+            color: var(--gray-dark);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .nav-center {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--gradient-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            margin-top: -20px;
+            box-shadow: var(--shadow-gold);
+            border: 4px solid var(--black);
+        }
+
+        .nav-center i {
+            font-size: 24px;
+        }
+
+        /* Generation Flow */
+        .gen-screen {
+            background: var(--black);
+            padding-bottom: 100px;
+        }
+
+        .gen-header {
+            padding: 50px 20px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .gen-back {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--black-lighter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .gen-header-title {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        /* Style Selection */
+        .style-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 0 20px;
+        }
+
+        .style-card {
+            aspect-ratio: 1;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .style-card.selected {
+            border-color: var(--gold);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .style-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .style-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent 30%, rgba(0,0,0,0.85) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 12px;
+        }
+
+        .style-card-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .style-card-desc {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        .check-icon {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .style-card.selected .check-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Options */
+        .options-section {
+            padding: 20px;
+        }
+
+        .option-group {
+            margin-bottom: 20px;
+        }
+
+        .option-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .option-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--black-lighter);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--gray);
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chip.selected {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* Generate Button Fixed */
+        .generate-fixed {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px 20px 30px;
+            background: linear-gradient(transparent, var(--black) 30%);
+            z-index: 40;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            background: var(--black);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 90;
+        }
+
+        .loading-ring {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--black-lighter);
+            border-top-color: var(--gold);
+            animation: spin 1s linear infinite;
+            position: relative;
+        }
+
+        .loading-ring::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            color: var(--gold);
+        }
+
+        .loading-text {
+            margin-top: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .loading-subtext {
+            margin-top: 8px;
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .loading-progress {
+            margin-top: 30px;
+            width: 200px;
+            height: 4px;
+            background: var(--black-lighter);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loading-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-gold);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .loading-steps {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .loading-step {
+            font-size: 12px;
+            color: var(--gray-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .loading-step.active {
+            color: var(--gold);
+        }
+
+        .loading-step i {
+            font-size: 10px;
+        }
+
+        /* Result Screen */
+        .result-screen {
+            background: var(--black);
+        }
+
+        .result-image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+        }
+
+        .result-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .result-actions-overlay {
+            position: absolute;
+            top: 50px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .result-action-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .result-info {
+            padding: 20px;
+        }
+
+        .result-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .result-meta {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .result-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .result-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 14px;
+            background: var(--black-lighter);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .result-action:active {
+            background: var(--black-card);
+        }
+
+        .result-action i {
+            font-size: 20px;
+            color: var(--gold);
+        }
+
+        .result-action span {
+            font-size: 11px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        /* Before/After */
+        .before-after-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+        }
+
+        .before-after-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .before-image {
+            clip-path: inset(0 50% 0 0);
+        }
+
+        .after-image {
+            clip-path: inset(0 0 0 50%);
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 3px;
+            background: var(--gold);
+            cursor: ew-resize;
+            z-index: 10;
+        }
+
+        .slider-handle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-handle::after {
+            content: '\f337';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--black);
+            font-size: 14px;
+            z-index: 11;
+        }
+
+        .ba-label {
+            position: absolute;
+            top: 16px;
+            padding: 6px 12px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--white);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            z-index: 5;
+        }
+
+        .ba-label.before {
+            right: 16px;
+        }
+
+        .ba-label.after {
+            left: 16px;
+        }
+
+        /* Gallery Screen */
+        .gallery-screen {
+            background: var(--black);
+            padding-bottom: 100px;
+        }
+
+        .gallery-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 0 20px;
+            margin-bottom: 16px;
+        }
+
+        .gallery-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--black-lighter);
+            border: 1px solid rgba(255,255,255,0.05);
+            color: var(--gray);
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .gallery-tab.active {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* Settings Screen */
+        .settings-screen {
+            background: var(--black);
+            padding-bottom: 100px;
+        }
+
+        .settings-group {
+            margin: 0 20px 20px;
+            background: var(--black-lighter);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            cursor: pointer;
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .settings-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(212, 175, 55, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 14px;
+        }
+
+        .settings-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .settings-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .settings-value {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        /* Toggle Switch */
+        .toggle {
+            width: 48px;
+            height: 26px;
+            border-radius: 13px;
+            background: var(--gray-dark);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle.active {
+            background: var(--gold);
+        }
+
+        .toggle-knob {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--white);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .toggle.active .toggle-knob {
+            right: 25px;
+        }
+
+        /* Share Modal */
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-sheet {
+            width: 100%;
+            background: var(--black-lighter);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            padding: 24px;
+            transform: translateY(100%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .modal-overlay.active .modal-sheet {
+            transform: translateY(0);
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .share-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .share-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .share-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--white);
+        }
+
+        .share-icon.whatsapp { background: #25D366; }
+        .share-icon.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .share-icon.twitter { background: #1DA1F2; }
+        .share-icon.copy { background: var(--black-card); border: 1px solid rgba(255,255,255,0.1); }
+
+        .share-label {
+            font-size: 11px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        .modal-close {
+            width: 100%;
+            padding: 14px;
+            background: var(--black-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-md);
+            color: var(--white);
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* AI Badge */
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .ai-badge i {
+            font-size: 10px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Premium Tag */
+        .premium-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 4px 10px;
+            background: var(--gradient-gold);
+            color: var(--black);
+            font-size: 10px;
+            font-weight: 800;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Particles */
+        .particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float-up 8s linear infinite;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* Toast */
+        .toast {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: var(--black-lighter);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--white);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 200;
+            box-shadow: var(--shadow-card);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast i {
+            color: var(--gold);
+        }
+
+        /* Full Image View */
+        .full-image-view {
+            position: absolute;
+            inset: 0;
+            background: var(--black);
+            z-index: 80;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-image-view.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .full-image-view img {
+            flex: 1;
+            width: 100%;
+            object-fit: contain;
+            background: var(--black);
+        }
+
+        .full-image-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 50px 20px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(var(--black), transparent);
+            z-index: 5;
+        }
+
+        /* Responsive Text for English */
+        [dir="ltr"] {
+            font-family: 'Tajawal', 'Cairo', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Toast -->
+        <div class="toast" id="toast">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastText">تم بنجاح</span>
+        </div>
+
+        <!-- ==================== SPLASH SCREEN ==================== -->
+        <div class="screen splash-screen active" id="splashScreen">
+            <div class="particles" id="splashParticles"></div>
+            <div class="splash-logo">
+                <i class="fas fa-crown"></i>
+            </div>
+            <div class="splash-title">Yemen Wedding AI</div>
+            <div class="splash-subtitle">الذكاء الاصطناعي للزفاف اليمني</div>
+            <div class="splash-loader">
+                <div class="splash-loader-bar"></div>
+            </div>
+        </div>
+
+        <!-- ==================== ONBOARDING ==================== -->
+        <div class="screen onboarding-screen" id="onboardingScreen">
+            <div class="onboarding-container">
+                <div class="onboarding-slides">
+                    <div class="onboarding-slide active" data-slide="0">
+                        <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" class="onboarding-image" alt="Yemeni Wedding">
+                        <div class="onboarding-title">تراث يمني أصيل</div>
+                        <div class="onboarding-desc">اكتشف جمال الأزياء اليمنية التقليدية بأدق التفاصيل، من الثوب الصنعاني إلى الزي الحضرمي الفاخر</div>
+                    </div>
+                    <div class="onboarding-slide" data-slide="1">
+                        <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" class="onboarding-image" alt="Yemeni Jewelry">
+                        <div class="onboarding-title">مجوهرات فاخرة</div>
+                        <div class="onboarding-desc">توليد صور واقعية للمجوهرات اليمنية التقليدية، الفضة، المرجان، والعنبر بجودة استوديو احترافية</div>
+                    </div>
+                    <div class="onboarding-slide" data-slide="2">
+                        <img src="https://kimi-web-img.moonshot.cn/img/budgetedwedding.wordpress.com/55deae647332081506d9aef286273b66d8232cd6.png" class="onboarding-image" alt="AI Generation">
+                        <div class="onboarding-title">ذكاء اصطناعي متقدم</div>
+                        <div class="onboarding-desc">أحدث نماذج الذكاء الاصطناعي لإنتاج صور زفاف يمنية سينمائية بإضاءة احترافية وتفاصيل دقيقة</div>
+                    </div>
+                </div>
+                <div class="onboarding-dots">
+                    <div class="dot active" data-dot="0"></div>
+                    <div class="dot" data-dot="1"></div>
+                    <div class="dot" data-dot="2"></div>
+                </div>
+                <div class="onboarding-buttons">
+                    <button class="btn btn-primary" id="onboardingNext">
+                        <span>التالي</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button class="btn btn-secondary" id="onboardingSkip">تخطي</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== HOME SCREEN ==================== -->
+        <div class="screen home-screen" id="homeScreen">
+            <div class="home-header">
+                <div class="home-header-top">
+                    <div class="home-logo-text">Yemen Wedding AI</div>
+                    <div class="home-header-icon" onclick="navigateTo('settingsScreen')">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                </div>
+                <div class="home-welcome">أهلاً بك في عالم الفخامة</div>
+                <div class="home-name">صانع الذكريات اليمنية</div>
+            </div>
+
+            <div class="hero-card">
+                <div class="hero-title">أنشئ صورة زفافك اليمنية</div>
+                <div class="hero-desc">اختر الزي التقليدي، الخلفية، والإضاءة. دع الذكاء الاصطناعي يرسم لحظاتك الذهبية</div>
+                <button class="hero-btn" onclick="navigateTo('genScreen')">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    <span>ابدأ التوليد</span>
+                </button>
+            </div>
+
+            <div class="section-header">
+                <div class="section-title">أنماط الزفاف</div>
+                <div class="section-link" onclick="navigateTo('genScreen')">عرض الكل</div>
+            </div>
+
+            <div class="presets-scroll">
+                <div class="preset-card active" onclick="selectPreset(this, 'royal')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg" alt="Royal">
+                    <div class="preset-overlay">
+                        <div class="preset-name">الملكي اليمني</div>
+                        <div class="preset-count">١٢٤ توليد</div>
+                    </div>
+                </div>
+                <div class="preset-card" onclick="selectPreset(this, 'sanaani')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" alt="Sanaani">
+                    <div class="preset-overlay">
+                        <div class="preset-name">صنعاني تقليدي</div>
+                        <div class="preset-count">٩٨ توليد</div>
+                    </div>
+                </div>
+                <div class="preset-card" onclick="selectPreset(this, 'hadrami')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/blogger.googleusercontent.com/291827920ff0b1a5c674dd0c6611645da52bbb93.JPG" alt="Hadrami">
+                    <div class="preset-overlay">
+                        <div class="preset-name">حضرمي فاخر</div>
+                        <div class="preset-count">٨٧ توليد</div>
+                    </div>
+                </div>
+                <div class="preset-card" onclick="selectPreset(this, 'gulf')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/thearabweekly.com/38f0c93a32844e6fc499e7c848a90c64276a4404.jpg" alt="Gulf">
+                    <div class="preset-overlay">
+                        <div class="preset-name">خليجي-يمني</div>
+                        <div class="preset-count">٦٥ توليد</div>
+                    </div>
+                </div>
+                <div class="preset-card" onclick="selectPreset(this, 'classic')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" alt="Classic">
+                    <div class="preset-overlay">
+                        <div class="preset-name">كلاسيكي عربي</div>
+                        <div class="preset-count">٥٤ توليد</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <div class="section-title">إبداعات حديثة</div>
+                <div class="section-link" onclick="navigateTo('galleryScreen')">المعرض</div>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg', 'زفاف صنعاني تقليدي')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" alt="Wedding">
+                    <div class="gallery-badge">AI HD</div>
+                    <div class="gallery-info">
+                        <div class="gallery-style">زفاف صنعاني</div>
+                        <div class="gallery-date">منذ ساعتين</div>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg', 'عروس يمنية بالمجوهرات')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" alt="Bride">
+                    <div class="gallery-badge">4K</div>
+                    <div class="gallery-info">
+                        <div class="gallery-style">مجوهرات فضية</div>
+                        <div class="gallery-date">منذ ٥ ساعات</div>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/budgetedwedding.wordpress.com/55deae647332081506d9aef286273b66d8232cd6.png', 'زفاف حضرمي ملكي')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/budgetedwedding.wordpress.com/55deae647332081506d9aef286273b66d8232cd6.png" alt="Hadrami">
+                    <div class="gallery-badge">AI</div>
+                    <div class="gallery-info">
+                        <div class="gallery-style">حضرمي ملكي</div>
+                        <div class="gallery-date">أمس</div>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg', 'ثوب زفاف فاخر')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg" alt="Dress">
+                    <div class="gallery-badge">HD</div>
+                    <div class="gallery-info">
+                        <div class="gallery-style">ثوب فاخر</div>
+                        <div class="gallery-date">أمس</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== GENERATION SCREEN ==================== -->
+        <div class="screen gen-screen" id="genScreen">
+            <div class="gen-header">
+                <div class="gen-back" onclick="navigateTo('homeScreen')">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="gen-header-title">توليد صورة الزفاف</div>
+            </div>
+
+            <div class="section-header" style="margin-top: 0;">
+                <div class="section-title">اختر النمط</div>
+            </div>
+
+            <div class="style-grid">
+                <div class="style-card selected" data-style="royal" onclick="selectStyle(this)">
+                    <img src="https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg" alt="Royal">
+                    <div class="style-card-overlay">
+                        <div class="style-card-name">الملكي اليمني</div>
+                        <div class="style-card-desc">ذهبي فاخر، تيجان، حرير</div>
+                    </div>
+                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="style-card" data-style="sanaani" onclick="selectStyle(this)">
+                    <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" alt="Sanaani">
+                    <div class="style-card-overlay">
+                        <div class="style-card-name">صنعاني تقليدي</div>
+                        <div class="style-card-desc">زينة، مسار، رقش فضي</div>
+                    </div>
+                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="style-card" data-style="hadrami" onclick="selectStyle(this)">
+                    <img src="https://kimi-web-img.moonshot.cn/img/blogger.googleusercontent.com/291827920ff0b1a5c674dd0c6611645da52bbb93.JPG" alt="Hadrami">
+                    <div class="style-card-overlay">
+                        <div class="style-card-name">حضرمي فاخر</div>
+                        <div class="style-card-desc">دواني، حزام فضي، عنبر</div>
+                    </div>
+                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="style-card" data-style="gulf" onclick="selectStyle(this)">
+                    <img src="https://kimi-web-img.moonshot.cn/img/thearabweekly.com/38f0c93a32844e6fc499e7c848a90c64276a4404.jpg" alt="Gulf">
+                    <div class="style-card-overlay">
+                        <div class="style-card-name">خليجي-يمني</div>
+                        <div class="style-card-desc">عصرية بلمسة يمنية</div>
+                    </div>
+                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="style-card" data-style="classic" onclick="selectStyle(this)">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" alt="Classic">
+                    <div class="style-card-overlay">
+                        <div class="style-card-name">كلاسيكي عربي</div>
+                        <div class="style-card-desc">مرجان، فضة، ياسمين</div>
+                    </div>
+                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="style-card" data-style="modern" onclick="selectStyle(this)">
+                    <img src="https://kimi-web-img.moonshot.cn/img/ritaokrent.com/2744c6f4c495b7208fb70e3c23f450e0742e03c9.jpg" alt="Modern">
+                    <div class="style-card-overlay">
+                        <div class="style-card-name">عصري أنيق</div>
+                        <div class="style-card-desc">تصميمات عصرية فاخرة</div>
+                    </div>
+                    <div class="check-icon"><i class="fas fa-check"></i></div>
+                </div>
+            </div>
+
+            <div class="options-section">
+                <div class="option-group">
+                    <label class="option-label">الشخصية</label>
+                    <div class="option-chips">
+                        <div class="chip selected" onclick="toggleChip(this)">عروس</div>
+                        <div class="chip" onclick="toggleChip(this)">عريس</div>
+                        <div class="chip" onclick="toggleChip(this)">زوجان</div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label class="option-label">الخلفية</label>
+                    <div class="option-chips">
+                        <div class="chip selected" onclick="toggleChip(this)">صنعاء القديمة</div>
+                        <div class="chip" onclick="toggleChip(this)">قصر فاخر</div>
+                        <div class="chip" onclick="toggleChip(this)">جبال اليمن</div>
+                        <div class="chip" onclick="toggleChip(this)">مقلط تقليدي</div>
+                        <div class="chip" onclick="toggleChip(this)">شاطئ عدن</div>
+                        <div class="chip" onclick="toggleChip(this)">صحراء حضرموت</div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label class="option-label">التفاصيل</label>
+                    <div class="option-chips">
+                        <div class="chip selected" onclick="toggleChip(this)">مجوهرات فضية</div>
+                        <div class="chip" onclick="toggleChip(this)">جنابي</div>
+                        <div class="chip" onclick="toggleChip(this)">حنة يمنية</div>
+                        <div class="chip" onclick="toggleChip(this)">ياسمين</div>
+                        <div class="chip" onclick="toggleChip(this)">بخور</div>
+                        <div class="chip" onclick="toggleChip(this)">برع تقليدي</div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <label class="option-label">جودة الصورة</label>
+                    <div class="option-chips">
+                        <div class="chip" onclick="toggleChip(this)">HD</div>
+                        <div class="chip selected" onclick="toggleChip(this)">2K</div>
+                        <div class="chip" onclick="toggleChip(this)">4K Ultra</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 100px;"></div>
+
+            <div class="generate-fixed">
+                <button class="btn btn-primary" onclick="startGeneration()">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    <span>توليد الصورة بالذكاء الاصطناعي</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ==================== LOADING SCREEN ==================== -->
+        <div class="screen loading-screen" id="loadingScreen">
+            <div class="loading-ring">
+                <div class="loading-inner"><i class="fas fa-crown"></i></div>
+            </div>
+            <div class="loading-text">جاري التوليد...</div>
+            <div class="loading-subtext">الذكاء الاصطناعي يرسم لحظاتك الذهبية</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar" id="loadingBar"></div>
+            </div>
+            <div class="loading-steps">
+                <div class="loading-step active" id="step1"><i class="fas fa-circle"></i> تحليل النمط اليمني</div>
+                <div class="loading-step" id="step2"><i class="fas fa-circle"></i> توليد الزي التقليدي</div>
+                <div class="loading-step" id="step3"><i class="fas fa-circle"></i> إضافة المجوهرات والتفاصيل</div>
+                <div class="loading-step" id="step4"><i class="fas fa-circle"></i> معالجة الإضاءة السينمائية</div>
+                <div class="loading-step" id="step5"><i class="fas fa-circle"></i> تحسين الوجه والملامح</div>
+            </div>
+        </div>
+
+        <!-- ==================== RESULT SCREEN ==================== -->
+        <div class="screen result-screen" id="resultScreen">
+            <div class="result-image-container">
+                <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" id="resultImage" alt="Result">
+                <div class="result-actions-overlay">
+                    <div class="result-action-btn" onclick="navigateTo('homeScreen')">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="result-action-btn" onclick="openShareModal()">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                </div>
+                <div class="premium-tag">AI Generated</div>
+            </div>
+
+            <div class="result-info">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                    <div class="result-title">زفاف صنعاني ملكي</div>
+                    <div class="ai-badge"><i class="fas fa-sparkles"></i> AI</div>
+                </div>
+                <div class="result-meta">الملكي اليمني • صنعاء القديمة • مجوهرات فضية • 4K Ultra HD</div>
+
+                <div class="before-after-container" id="beforeAfter">
+                    <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" class="before-image" id="beforeImg" alt="Before">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" class="after-image" id="afterImg" alt="After">
+                    <div class="slider-handle" id="sliderHandle"></div>
+                    <div class="ba-label before">قبل</div>
+                    <div class="ba-label after">بعد</div>
+                </div>
+
+                <div class="result-actions">
+                    <div class="result-action" onclick="showToast('تم الحفظ في المعرض')">
+                        <i class="fas fa-download"></i>
+                        <span>حفظ</span>
+                    </div>
+                    <div class="result-action" onclick="openShareModal()">
+                        <i class="fas fa-share-nodes"></i>
+                        <span>مشاركة</span>
+                    </div>
+                    <div class="result-action" onclick="showToast('تم النسخ إلى الحافظة')">
+                        <i class="fas fa-copy"></i>
+                        <span>نسخ</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="navigateTo('genScreen')">
+                    <i class="fas fa-rotate-right"></i>
+                    <span>توليد صورة جديدة</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ==================== GALLERY SCREEN ==================== -->
+        <div class="screen gallery-screen" id="galleryScreen">
+            <div class="gen-header">
+                <div class="gen-back" onclick="navigateTo('homeScreen')">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="gen-header-title">معرض الإبداعات</div>
+            </div>
+
+            <div class="gallery-tabs">
+                <div class="gallery-tab active" onclick="selectGalleryTab(this)">الكل</div>
+                <div class="gallery-tab" onclick="selectGalleryTab(this)">عروس</div>
+                <div class="gallery-tab" onclick="selectGalleryTab(this)">عريس</div>
+                <div class="gallery-tab" onclick="selectGalleryTab(this)">أزواج</div>
+                <div class="gallery-tab" onclick="selectGalleryTab(this)">المفضلة</div>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg', 'زفاف صنعاني')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/bolenbliss.com/10a4033840c10c140159caf01b4edbb12f0e7158.jpg" alt="">
+                    <div class="gallery-badge">AI</div>
+                    <div class="gallery-info">
+                        <div class="gallery-style">زفاف صنعاني</div>
+                        <div class="gallery-date">اليوم</div>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg', 'عروس بالمجوهرات')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/static01.nyt.com/11c809c1364a61ad17d042b50659bf45c7bc8176.jpg" alt="">
+                    <div class="gallery-badge">4K</div>
+                    <div class="gallery-info">
+                        <div class="gallery-style">عروس بالمجوهرات</div>
+                        <div class="gallery-date">اليوم</div>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg', 'ثوب ملكي')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/i.etsystatic.com/599e4f14dbdab3e980c65f2c1fcaf9305bf6f94c.jpg" alt="">
+                    <div class="gallery-badge">HD</div>
+                    <div class="gallery-info">
+                        <div class="gallery-style">ثوب ملكي</div>
+                        <div class="gallery-date">أمس</div>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/budgetedwedding.wordpress.com/55deae647332081506d9aef286273b66d8232cd6.png', 'زفاف حضرمي')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/budgetedwedding.wordpress.com/55deae647332081506d9aef286273b66d8232cd6.png" alt="">
+                    <div class="gallery-badge">AI</div>
+                    <div class="gallery-info">
+                        <div class="gallery-style">زفاف حضرمي</div>
+                        <div class="gallery-date">أمس</div>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/blogger.googleusercontent.com/291827920ff0b1a5c674dd0c6611645da52bbb93.JPG', 'زي حضرمي تقليدي')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/blogger.googleusercontent.com/291827920ff0b1a5c674dd0c6611645da52bbb93.JPG" alt="">
+                    <div class="gallery-badge">HD</div>
+                    <div class="gallery-info">
+                        <div class="gallery-style">زي حضرمي</div>
+                        <div class="gallery-date">منذ ٢ يوم</div>
+                    </div>
+                </div>
+                <div class="gallery-item" onclick="openFullImage('https://kimi-web-img.moonshot.cn/img/thearabweekly.com/38f0c93a32844e6fc499e7c848a90c64276a4404.jpg', 'عريس يمني')">
+                    <img src="https://kimi-web-img.moonshot.cn/img/thearabweekly.com/38f0c93a32844e6fc499e7c848a90c64276a4404.jpg" alt="">
+                    <div class="gallery-badge">AI</div>
+                    <div class="gallery-info">
+                        <div class="gallery-style">عريس يمني</div>
+                        <div class="gallery-date">منذ ٣ أيام</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SETTINGS SCREEN ==================== -->
+        <div class="screen settings-screen" id="settingsScreen">
+            <div class="gen-header">
+                <div class="gen-back" onclick="navigateTo('homeScreen')">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="gen-header-title">الإعدادات</div>
+            </div>
+
+            <div class="settings-group">
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <div class="settings-icon"><i class="fas fa-moon"></i></div>
+                        <div class="settings-text">الوضع المظلم</div>
+                    </div>
+                    <div class="toggle active" onclick="toggleSwitch(this)">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <div class="settings-icon"><i class="fas fa-bell"></i></div>
+                        <div class="settings-text">الإشعارات</div>
+                    </div>
+                    <div class="toggle active" onclick="toggleSwitch(this)">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <div class="settings-icon"><i class="fas fa-wand-sparkles"></i></div>
+                        <div class="settings-text">جودة عالية تلقائياً</div>
+                    </div>
+                    <div class="toggle" onclick="toggleSwitch(this)">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <div class="settings-icon"><i class="fas fa-globe"></i></div>
+                        <div class="settings-text">اللغة</div>
+                    </div>
+                    <div class="settings-right">
+                        <div class="settings-value">العربية</div>
+                        <i class="fas fa-chevron-left" style="color: var(--gray-dark); font-size: 12px;"></i>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <div class="settings-icon"><i class="fas fa-image"></i></div>
+                        <div class="settings-text">جودة التصدير</div>
+                    </div>
+                    <div class="settings-right">
+                        <div class="settings-value">4K Ultra</div>
+                        <i class="fas fa-chevron-left" style="color: var(--gray-dark); font-size: 12px;"></i>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <div class="settings-icon"><i class="fas fa-palette"></i></div>
+                        <div class="settings-text">المظهر</div>
+                    </div>
+                    <div class="settings-right">
+                        <div class="settings-value">ذهبي فاخر</div>
+                        <i class="fas fa-chevron-left" style="color: var(--gray-dark); font-size: 12px;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <div class="settings-icon"><i class="fas fa-star"></i></div>
+                        <div class="settings-text">ترقية للنسخة المميزة</div>
+                    </div>
+                    <div class="settings-right">
+                        <i class="fas fa-chevron-left" style="color: var(--gray-dark); font-size: 12px;"></i>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <div class="settings-icon"><i class="fas fa-circle-question"></i></div>
+                        <div class="settings-text">المساعدة والدعم</div>
+                    </div>
+                    <div class="settings-right">
+                        <i class="fas fa-chevron-left" style="color: var(--gray-dark); font-size: 12px;"></i>
+                    </div>
+                </div>
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <div class="settings-icon"><i class="fas fa-shield-halved"></i></div>
+                        <div class="settings-text">سياسة الخصوصية</div>
+                    </div>
+                    <div class="settings-right">
+                        <i class="fas fa-chevron-left" style="color: var(--gray-dark); font-size: 12px;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; padding: 20px; color: var(--gray-dark); font-size: 12px;">
+                Yemen Wedding AI v1.0.0<br>
+                صنع بحب للتراث اليمني
+            </div>
+        </div>
+
+        <!-- ==================== FULL IMAGE VIEW ==================== -->
+        <div class="full-image-view" id="fullImageView">
+            <div class="full-image-header">
+                <div class="gen-back" onclick="closeFullImage()">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div style="font-size: 14px; font-weight: 700;" id="fullImageTitle">صورة الزفاف</div>
+                <div class="gen-back" onclick="openShareModal()">
+                    <i class="fas fa-share-alt"></i>
+                </div>
+            </div>
+            <img src="" id="fullImageSrc" alt="Full">
+        </div>
+
+        <!-- ==================== SHARE MODAL ==================== -->
+        <div class="modal-overlay" id="shareModal" onclick="closeShareModal(event)">
+            <div class="modal-sheet" onclick="event.stopPropagation()">
+                <div class="modal-title">مشاركة الصورة</div>
+                <div class="share-grid">
+                    <div class="share-item" onclick="showToast('تمت المشاركة على واتساب')">
+                        <div class="share-icon whatsapp"><i class="fab fa-whatsapp"></i></div>
+                        <div class="share-label">واتساب</div>
+                    </div>
+                    <div class="share-item" onclick="showToast('تمت المشاركة على انستقرام')">
+                        <div class="share-icon instagram"><i class="fab fa-instagram"></i></div>
+                        <div class="share-label">انستقرام</div>
+                    </div>
+                    <div class="share-item" onclick="showToast('تمت المشاركة على تويتر')">
+                        <div class="share-icon twitter"><i class="fab fa-twitter"></i></div>
+                        <div class="share-label">تويتر</div>
+                    </div>
+                    <div class="share-item" onclick="showToast('تم نسخ الرابط')">
+                        <div class="share-icon copy"><i class="fas fa-link"></i></div>
+                        <div class="share-label">نسخ الرابط</div>
+                    </div>
+                </div>
+                <button class="modal-close" onclick="closeShareModal()">إغلاق</button>
+            </div>
+        </div>
+
+        <!-- ==================== BOTTOM NAVIGATION ==================== -->
+        <div class="bottom-nav" id="bottomNav">
+            <div class="nav-item active" onclick="navigateTo('homeScreen', this)">
+                <i class="fas fa-house"></i>
+                <span>الرئيسية</span>
+            </div>
+            <div class="nav-item" onclick="navigateTo('galleryScreen', this)">
+                <i class="fas fa-images"></i>
+                <span>المعرض</span>
+            </div>
+            <div class="nav-center" onclick="navigateTo('genScreen')">
+                <i class="fas fa-plus"></i>
+            </div>
+            <div class="nav-item" onclick="navigateTo('settingsScreen', this)">
+                <i class="fas fa-compass"></i>
+                <span>استكشاف</span>
+            </div>
+            <div class="nav-item" onclick="navigateTo('settingsScreen', this)">
+                <i class="fas fa-user"></i>
+                <span>حسابي</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== STATE ====================
+        let currentScreen = 'splashScreen';
+        let onboardingIndex = 0;
+        const onboardingSlides = document.querySelectorAll('.onboarding-slide');
+        const onboardingDots = document.querySelectorAll('.dot');
+
+        // ==================== SPLASH ====================
+        function createParticles() {
+            const container = document.getElementById('splashParticles');
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 8 + 's';
+                p.style.animationDuration = (6 + Math.random() * 6) + 's';
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        setTimeout(() => {
+            navigateTo('onboardingScreen');
+        }, 3000);
+
+        // ==================== NAVIGATION ====================
+        function navigateTo(screenId, navItem = null) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(s => {
+                s.classList.remove('active');
+            });
+
+            // Show target screen
+            const target = document.getElementById(screenId);
+            if (target) {
+                target.classList.add('active');
+                currentScreen = screenId;
+            }
+
+            // Update nav
+            if (navItem) {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                navItem.classList.add('active');
+            }
+
+            // Show/hide bottom nav
+            const screensWithNav = ['homeScreen', 'galleryScreen', 'settingsScreen'];
+            const bottomNav = document.getElementById('bottomNav');
+            if (screensWithNav.includes(screenId)) {
+                bottomNav.style.display = 'flex';
+            } else {
+                bottomNav.style.display = 'none';
+            }
+
+            // Update nav items based on screen
+            if (screenId === 'homeScreen') {
+                document.querySelectorAll('.nav-item')[0].classList.add('active');
+            } else if (screenId === 'galleryScreen') {
+                document.querySelectorAll('.nav-item')[1].classList.add('active');
+            }
+        }
+
+        // ==================== ONBOARDING ====================
+        function updateOnboarding() {
+            onboardingSlides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev');
+                if (i === onboardingIndex) slide.classList.add('active');
+                else if (i < onboardingIndex) slide.classList.add('prev');
+            });
+            onboardingDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === onboardingIndex);
+            });
+
+            const nextBtn = document.getElementById('onboardingNext');
+            if (onboardingIndex === onboardingSlides.length - 1) {
+                nextBtn.innerHTML = '<span>ابدأ الآن</span> <i class="fas fa-arrow-left"></i>';
+            } else {
+                nextBtn.innerHTML = '<span>التالي</span> <i class="fas fa-arrow-left"></i>';
+            }
+        }
+
+        document.getElementById('onboardingNext').addEventListener('click', () => {
+            if (onboardingIndex < onboardingSlides.length - 1) {
+                onboardingIndex++;
+                updateOnboarding();
+            } else {
+                navigateTo('homeScreen');
+            }
+        });
+
+        document.getElementById('onboardingSkip').addEventListener('click', () => {
+            navigateTo('homeScreen');
+        });
+
+        // ==================== PRESETS ====================
+        function selectPreset(card, style) {
+            document.querySelectorAll('.preset-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            setTimeout(() => navigateTo('genScreen'), 300);
+        }
+
+        // ==================== STYLE SELECTION ====================
+        function selectStyle(card) {
+            document.querySelectorAll('.style-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+        }
+
+        // ==================== CHIPS ====================
+        function toggleChip(chip) {
+            const parent = chip.parentElement;
+            const isMulti = parent.querySelectorAll('.chip').length > 3;
+            if (!isMulti) {
+                parent.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+            }
+            chip.classList.toggle('selected');
+        }
+
+        // ==================== GENERATION ====================
+        function startGeneration() {
+            navigateTo('loadingScreen');
+            const bar = document.getElementById('loadingBar');
+            const steps = [
+                document.getElementById('step1'),
+                document.getElementById('step2'),
+                document.getElementById('step3'),
+                document.getElementById('step4'),
+                document.getElementById('step5')
+            ];
+
+            let progress = 0;
+            let stepIndex = 0;
+
+            const interval = setInterval(() => {
+                progress += Math.random() * 15 + 5;
+                if (progress > 100) progress = 100;
+                bar.style.width = progress + '%';
+
+                if (progress > (stepIndex + 1) * 20 && stepIndex < steps.length - 1) {
+                    steps[stepIndex].classList.remove('active');
+                    stepIndex++;
+                    steps[stepIndex].classList.add('active');
+                }
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        navigateTo('resultScreen');
+                    }, 500);
+                }
+            }, 400);
+        }
+
+        // ==================== BEFORE/AFTER SLIDER ====================
+        const baContainer = document.getElementById('beforeAfter');
+        const sliderHandle = document.getElementById('sliderHandle');
+        const beforeImg = document.getElementById('beforeImg');
+        let isDragging = false;
+
+        function updateSlider(x) {
+            const rect = baContainer.getBoundingClientRect();
+            let percent = ((x - rect.left) / rect.width) * 100;
+            percent = Math.max(0, Math.min(100, percent));
+            sliderHandle.style.left = percent + '%';
+            beforeImg.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+        }
+
+        sliderHandle.addEventListener('mousedown', () => isDragging = true);
+        sliderHandle.addEventListener('touchstart', () => isDragging = true);
+        document.addEventListener('mouseup', () => isDragging = false);
+        document.addEventListener('touchend', () => isDragging = false);
+        document.addEventListener('mousemove', (e) => { if (isDragging) updateSlider(e.clientX); });
+        document.addEventListener('touchmove', (e) => { if (isDragging) updateSlider(e.touches[0].clientX); });
+        baContainer.addEventListener('click', (e) => updateSlider(e.clientX));
+
+        // ==================== FULL IMAGE ====================
+        function openFullImage(src, title) {
+            document.getElementById('fullImageSrc').src = src;
+            document.getElementById('fullImageTitle').textContent = title;
+            document.getElementById('fullImageView').classList.add('active');
+        }
+
+        function closeFullImage() {
+            document.getElementById('fullImageView').classList.remove('active');
+        }
+
+        // ==================== SHARE MODAL ====================
+        function openShareModal() {
+            document.getElementById('shareModal').classList.add('active');
+        }
+
+        function closeShareModal(e) {
+            if (!e || e.target === document.getElementById('shareModal')) {
+                document.getElementById('shareModal').classList.remove('active');
+            }
+        }
+
+        // ==================== TOAST ====================
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').textContent = text;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // ==================== TOGGLE SWITCH ====================
+        function toggleSwitch(toggle) {
+            toggle.classList.toggle('active');
+        }
+
+        // ==================== GALLERY TABS ====================
+        function selectGalleryTab(tab) {
+            document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+        }
+
+        // ==================== INIT ====================
+        document.getElementById('bottomNav').style.display = 'none';
+    </script>
+</body>
+</html>
